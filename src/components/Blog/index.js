@@ -2,9 +2,22 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Article from '../Article'
 import "../../css/style.css"
+import { connect } from 'react-redux'
+import { fetchPosts } from "../../actions/blog"
 
 class Blog extends Component {
+  componentDidMount() {
+    console.log(fetchPosts())
+    this.props.dispatch(fetchPosts())
+  }
+
   render() {
+    if(this.props.loading) {
+      return <div>loading</div>
+    } else {
+      {console.log(this.props.articles)}
+    } 
+    
     return (
       <div className="App">
         <div className="content">
@@ -44,4 +57,12 @@ const Header = (props) => (
   </header>
 );
 
-export default Blog;
+
+const mapStateToProps = state => ({
+  articles: state.blogReducer.articles,
+  loading: state.blogReducer.loading,
+  error: state.blogReducer.error
+})
+
+export default connect(mapStateToProps)(Blog)
+//export default Blog;
