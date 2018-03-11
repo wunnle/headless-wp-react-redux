@@ -1,5 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Main from './components/Main';
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'react-router-redux'
+import { Router } from 'react-router-dom'
+import store, { history } from './store'
+import Blog from './components/Blog';
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+render(
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <Blog />
+        </ConnectedRouter>
+    </Provider>,
+  document.getElementById('root')
+)

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class Article extends Component {
     render() {
@@ -12,10 +13,9 @@ class Article extends Component {
                 <h2>
 
                 <i className="emoji">✌</i>
-                {/* <Link to={`${process.env.PUBLIC_URL}/${article.slug}`}>
-                    {article.title.rendered}
-                </Link> */}
-                <a>This is article title</a>
+                <Link to="/article">
+                    This is the article title
+                </Link>
                 </h2>
                 <div className="article__bottom-details">
                 <a className="details__datetime">2 days ago</a>

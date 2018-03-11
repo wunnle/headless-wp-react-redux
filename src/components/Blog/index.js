@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
+import { Route, Link } from 'react-router-dom'
 import Article from '../Article'
 import "../../css/style.css"
 
-class Main extends Component {
+class Blog extends Component {
   render() {
     return (
       <div className="App">
-        <div className="ruler"></div>
         <div className="content">
           <div className="container">
             <Header/>
-            <Article />
+            <Route exact path="/" component={Articles} />
+            <Route exact path="/article" component={Article} />
           </div>
         </div>
         <Footer />
@@ -18,6 +19,13 @@ class Main extends Component {
     );
   }
 }
+
+const Articles = (props) => (
+  <div>
+    <Article />
+    <Article />
+  </div>
+)
 
 const Footer = (props) => (
   <footer>
@@ -31,9 +39,9 @@ const Header = (props) => (
   <header>
     <i className="papership" />
     <h1 onClick={props.handleHomeClick}>
-      {/* <Link>blog</Link> */}
+      { <Link to="/">blog</Link>}
     </h1>
   </header>
 );
 
-export default Main;
+export default Blog;
