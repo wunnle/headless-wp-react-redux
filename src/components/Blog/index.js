@@ -1,44 +1,53 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import Article from '../Article'
+import { Route, Link, withRouter  } from 'react-router-dom'
+import Post from '../Post'
 import "../../css/style.css"
 import { connect } from 'react-redux'
 import { fetchPosts } from "../../actions/blog"
 
 class Blog extends Component {
   componentDidMount() {
-    console.log(fetchPosts())
     this.props.dispatch(fetchPosts())
   }
 
   render() {
     if(this.props.loading) {
       return <div>loading</div>
-    } else {
-      {console.log(this.props.articles)}
     } 
+
+    if(this.props.error) {
+      return <div>something went wrong</div>
+    }
     
-    return (
-      <div className="App">
-        <div className="content">
-          <div className="container">
-            <Header/>
-            <Route exact path="/" component={Articles} />
-            <Route exact path="/article" component={Article} />
+    if(this.props.posts) {
+      return (
+        <div className="App">
+          <div className="content">
+            <div className="container">
+              <Header/>
+              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post}/>)} />
+              <Route exact path="/:postName" render={({match}) => {
+                console.log(match)
+                const m = this.props.posts.find(post => post.slug === match.params.postName)
+                console.log(m)
+                if(m) {
+                  return (
+                    <Post data={m}/>
+                  )
+                } else {
+                  return ('404')
+                }
+              }
+              
+              } />
+            </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    );
+        );
+    } 
   }
 }
-
-const Articles = (props) => (
-  <div>
-    <Article />
-    <Article />
-  </div>
-)
 
 const Footer = (props) => (
   <footer>
@@ -59,10 +68,9 @@ const Header = (props) => (
 
 
 const mapStateToProps = state => ({
-  articles: state.blogReducer.articles,
-  loading: state.blogReducer.loading,
-  error: state.blogReducer.error
+  posts: state.blog.posts,
+  loading: state.blog.loading,
+  error: state.blog.error
 })
 
-export default connect(mapStateToProps)(Blog)
-//export default Blog;
+export default withRouter(connect(mapStateToProps)(Blog))

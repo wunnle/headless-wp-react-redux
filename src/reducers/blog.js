@@ -1,10 +1,10 @@
 const initialState = {
-  articles: [],
+  posts: [],
   loading: false,
   error: null
 }
 
-export default function blogReducer(state = initialState, action) {
+export default function blog(state = initialState, action) {
   switch (action.type) {
     case 'FETCH_POSTS_BEGIN':
     return {
@@ -18,7 +18,7 @@ export default function blogReducer(state = initialState, action) {
     return {
       ...state,
       loading: false,
-      articles: action.payload.posts
+      posts: action.payload.posts
     }
 
     case 'FETCH_POSTS_FAIL':
@@ -26,7 +26,7 @@ export default function blogReducer(state = initialState, action) {
       ...state,
       loading: false,
       error: action.payload.error,
-      articles: []
+      posts: []
     }
 
     default:
