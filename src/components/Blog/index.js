@@ -3,11 +3,16 @@ import { Route, Link, withRouter  } from 'react-router-dom'
 import Post from '../Post'
 import "../../css/style.css"
 import { connect } from 'react-redux'
-import { fetchPosts } from "../../actions/blog"
+import { fetchPosts, changePage } from "../../actions/blog"
 
 class Blog extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts())
+  }
+
+  handleChangePage = (slug) => {
+    console.log('handleChangePage')
+    this.props.dispatch(changePage(slug))
   }
 
   render() {
@@ -25,7 +30,7 @@ class Blog extends Component {
           <div className="content">
             <div className="container">
               <Header/>
-              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post}/>)} />
+              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post} handleChangePage={this.handleChangePage}/>)} />
               <Route exact path="/:postName" render={({match}) => {
                 console.log(match)
                 const m = this.props.posts.find(post => post.slug === match.params.postName)
@@ -38,7 +43,6 @@ class Blog extends Component {
                   return ('404')
                 }
               }
-              
               } />
             </div>
           </div>

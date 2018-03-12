@@ -1,5 +1,6 @@
 const initialState = {
   posts: [],
+  currentURL: '/',
   loading: false,
   error: null
 }
@@ -27,6 +28,20 @@ export default function blog(state = initialState, action) {
       loading: false,
       error: action.payload.error,
       posts: []
+    }
+
+    case 'NAVIGATE_TO_POST':
+    console.log('whop!')
+    return {
+      ...state,
+      currentURL: action.payload.slug,
+      currentPostData: state.posts.find(post => post.slug === action.payload.slug)
+    }
+
+    case 'NAVIGATE_BEGIN':
+    console.log('1')
+    return {
+      ...state,
     }
 
     default:

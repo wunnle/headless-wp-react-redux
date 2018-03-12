@@ -1,3 +1,6 @@
+
+// Fetching blog posts
+
 export function fetchPosts(url) {
   return dispatch => {
     dispatch(fetchPostsBegin())
@@ -32,4 +35,29 @@ export const fetchPostsSuccess = (posts) => ({
 export const fetchPostsFail = (error) => ({
   type: 'FETCH_POSTS_FAIL',
   payload: { error }
+})
+
+
+// Navigating in blog
+
+export const changePage = url => {
+  console.log('navigating to post', url)
+  return (dispatch, getstate) => {
+    const { blog } = getstate()    
+    console.log(getstate())
+    if(blog.posts.find(post => post.slug === url)) {
+      dispatch(navigateToPost(url))
+    }
+
+    return
+  }
+}
+
+export const navigateToPost = (slug) => ({
+  type: 'NAVIGATE_TO_POST',
+  payload: { slug }
+})
+
+export const navigateBegin = () => ({
+  type: 'NAVIGATE_BEGIN',
 })
