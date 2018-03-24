@@ -44,11 +44,9 @@ export const changePage = url => {
   console.log('navigating to post', url)
   return (dispatch, getstate) => {
     const { blog } = getstate()    
-    console.log(getstate())
     if(blog.posts.find(post => post.slug === url)) {
       dispatch(navigateToPost(url))
     }
-
     return
   }
 }

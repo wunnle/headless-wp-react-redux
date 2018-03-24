@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 class Post extends Component {
     render() {
         const data = this.props.data
+        const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         return (
             <div className="article">
                 <div className="article__top-details">
@@ -23,7 +24,7 @@ class Post extends Component {
                 <a className="details__datetime">2 days ago</a>
                 <a>5 minute read</a>
                 </div>
-                <div className="article__content" dangerouslySetInnerHTML={{ __html: data.content.rendered}}> 
+                <div className="article__content" dangerouslySetInnerHTML={{ __html: content}}> 
                 </div>
             </div>
         )

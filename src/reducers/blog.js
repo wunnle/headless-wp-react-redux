@@ -15,7 +15,6 @@ export default function blog(state = initialState, action) {
     }
 
     case 'FETCH_POSTS_SUCCESS':
-    console.log(action)
     return {
       ...state,
       loading: false,
@@ -31,7 +30,6 @@ export default function blog(state = initialState, action) {
     }
 
     case 'NAVIGATE_TO_POST':
-    console.log('whop!')
     return {
       ...state,
       currentURL: action.payload.slug,
@@ -39,7 +37,6 @@ export default function blog(state = initialState, action) {
     }
 
     case 'NAVIGATE_BEGIN':
-    console.log('1')
     return {
       ...state,
     }

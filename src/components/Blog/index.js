@@ -3,6 +3,7 @@ import { Route, Link, withRouter  } from 'react-router-dom'
 import Post from '../Post'
 import "../../css/style.css"
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import { fetchPosts, changePage } from "../../actions/blog"
 
 class Blog extends Component {
@@ -12,7 +13,8 @@ class Blog extends Component {
 
   handleChangePage = (slug) => {
     console.log('handleChangePage')
-    this.props.dispatch(changePage(slug))
+    this.props.dispatch(push(slug))
+    //this.props.dispatch(changePage(slug)) // guess I don't need this
   }
 
   render() {
@@ -30,14 +32,14 @@ class Blog extends Component {
           <div className="content">
             <div className="container">
               <Header/>
-              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post} handleChangePage={this.handleChangePage}/>)} />
+              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post} handleChangePage={this.handleChangePage} type='excerpt'/> )} />
               <Route exact path="/:postName" render={({match}) => {
-                console.log(match)
+                console.log({match})
                 const m = this.props.posts.find(post => post.slug === match.params.postName)
                 console.log(m)
                 if(m) {
                   return (
-                    <Post data={m}/>
+                    <Post data={m} handleChangePage={this.handleChangePage} type='solo'/>
                   )
                 } else {
                   return ('404')

@@ -189,7 +189,7 @@ header i.papership {
         font-size: 18px;
         font-size: 32px;
         line-height: 1em;
-        font-weight: 500;
+        font-weight: 600;
         position: relative;
         transition: all 0.35s ease-in;
         cursor: pointer;
@@ -373,6 +373,10 @@ article.active {
         margin-top: 8px;
         margin-bottom: 30px;
         display: flex;
+    }
+
+    .link-more {
+        display: none;
     }
 }
 
