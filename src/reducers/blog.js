@@ -1,5 +1,8 @@
+
+
 const initialState = {
   posts: [],
+  categories: [],
   currentURL: '/',
   loading: false,
   error: null
@@ -10,23 +13,34 @@ export default function blog(state = initialState, action) {
     case 'FETCH_POSTS_BEGIN':
     return {
       ...state,
-      loading: true,
-      error: null
+      loading: true
     }
 
     case 'FETCH_POSTS_SUCCESS':
     return {
       ...state,
-      loading: false,
-      posts: action.payload.posts
+      posts: action.payload.posts,
+      loading: state.categories.length > 0 ? false : true
     }
 
     case 'FETCH_POSTS_FAIL':
     return {
       ...state,
-      loading: false,
       error: action.payload.error,
       posts: []
+    }
+
+    case 'FETCH_CATEGORIES_BEGIN':
+    return {
+      ...state,
+      loading: true,
+    }
+
+    case 'FETCH_CATEGORIES_SUCCESS':
+    return {
+      ...state,
+      categories: action.payload.categories,
+      loading: state.posts.length > 0 ? false : true
     }
 
     case 'NAVIGATE_TO_POST':

@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux'
 
 // Fetching blog posts
 
@@ -37,6 +38,36 @@ export const fetchPostsFail = (error) => ({
   payload: { error }
 })
 
+// Fetch blog categories
+
+export function fetchCategories() {
+  return dispatch => {
+    dispatch(fetchCategoriesBegin())
+    return fetch("http://wunnle.com/headless/wp-json/wp/v2/categories")
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(fetchCategoriesSuccess(json))
+        return json
+      })
+      .catch(error => dispatch(fetchCategoriesFail(error)))
+  }
+}
+
+export const fetchCategoriesBegin = () => ({
+  type: 'FETCH_CATEGORIES_BEGIN'
+})
+
+export const fetchCategoriesSuccess = (categories) => ({
+  type: 'FETCH_CATEGORIES_SUCCESS',
+  payload: { categories }
+})
+
+export const fetchCategoriesFail = (error) => ({
+  type: 'FETCH_CATEGORIES_FAIL',
+  payload: { error }
+})
+
 
 // Navigating in blog
 
@@ -46,6 +77,7 @@ export const changePage = url => {
     const { blog } = getstate()    
     if(blog.posts.find(post => post.slug === url)) {
       dispatch(navigateToPost(url))
+      dispatch(push(url))
     }
     return
   }
