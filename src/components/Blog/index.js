@@ -14,8 +14,7 @@ class Blog extends Component {
 
   handleChangePage = (slug) => {
     console.log('handleChangePage')
-    this.props.dispatch(push(slug))
-    this.props.dispatch(changePage(slug)) // guess I don't need this
+    this.props.dispatch(changePage(slug))
   }
 
   render() {
@@ -27,7 +26,9 @@ class Blog extends Component {
       return <div>something went wrong</div>
     }
     
-    if(this.props.posts) {
+    if(this.props.posts.length > 0 && this.props.categories.length > 0) {
+      console.log(typeof(this.props.categories))
+      console.log(this.props.categories)
       return (
         <div className="App">
           <div className="content">
@@ -45,12 +46,22 @@ class Blog extends Component {
                 }
               }
               } />
+              <Route exact path="/category/:categoryName" render={({match}) => {
+                const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
+                return (
+                  this.props.posts.filter(post => post.categories[0] === categoryID)
+                  .map(post => <Post data={post} handleChangePage={this.handleChangePage} type='excerpt'/>)
+                )
+              }
+             } />
             </div>
           </div>
           <Footer />
         </div>
         );
-    } 
+    } else {
+      return 'not much to see'
+    }
   }
 }
 
@@ -74,6 +85,7 @@ const Header = (props) => (
 
 const mapStateToProps = state => ({
   posts: state.blog.posts,
+  categories: state.blog.categories,
   loading: state.blog.loading,
   error: state.blog.error
 })
