@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import htmlToText from "html-to-text"
 
 class Post extends Component {
     render() {
         const data = this.props.data
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
+        const timeToRead = this.calcTimeToRead(data.content.rendered)
 
         return (
             <div className="article">
@@ -22,12 +24,25 @@ class Post extends Component {
                 </h2>
                 <div className="article__bottom-details">
                 <a className="details__datetime">2 days ago</a>
-                <a>5 minute read</a>
+                <a>{timeToRead} minute read</a>
                 </div>
                 <div className="article__content" dangerouslySetInnerHTML={{ __html: content}}> 
                 </div>
             </div>
         )
+    }
+
+    calcTimeToRead = content => {
+        let words, imgs = 0;
+    
+        const wps = 0.218340611, ips = 12;
+    
+        let el = document.createElement("html");
+        el.innerHTML = content;
+        imgs = el.querySelectorAll("img").length;
+    
+        words = htmlToText.fromString(content).length;
+        return Math.floor(Math.floor((words * wps + imgs * ips) / 60));
     }
 }
 
