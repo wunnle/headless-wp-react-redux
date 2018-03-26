@@ -14,7 +14,6 @@ class Post extends Component {
                 <div className="article__top-details">
                 {
                     (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
-
                 }
                 </div>
                 <h2>

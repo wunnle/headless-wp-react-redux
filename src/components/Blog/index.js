@@ -48,6 +48,7 @@ class Blog extends Component {
               } />
               <Route exact path="/category/:categoryName" render={({match}) => {
                 const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
+                
                 return (
                   this.props.posts.filter(post => post.categories[0] === categoryID)
                   .map(post => <Post data={post} handleChangePage={this.handleChangePage} type='excerpt'/>)
