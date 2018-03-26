@@ -9,6 +9,7 @@ class Post extends Component {
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = this.calcTimeToRead(data.content.rendered)
+        const dateTime = this.calcDateTime(data.date)
 
         return (
             <div className="article">
@@ -23,8 +24,8 @@ class Post extends Component {
                 <Link to={'/' + data.slug}>{data.title.rendered}</Link>
                 </h2>
                 <div className="article__bottom-details">
-                <a className="details__datetime">2 days ago</a>
-                <a>{timeToRead} minute read</a>
+                <a className="details__datetime">{dateTime}</a>
+                <a>{timeToRead} min read</a>
                 </div>
                 <div className="article__content" dangerouslySetInnerHTML={{ __html: content}}> 
                 </div>
@@ -43,6 +44,28 @@ class Post extends Component {
     
         words = htmlToText.fromString(content).length;
         return Math.floor(Math.floor((words * wps + imgs * ips) / 60));
+    }
+
+    calcDateTime = t => {
+        const date = new Date(t)
+    
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        const now = new Date()
+        if (now.getFullYear() ==! date.getFullYear()) {
+          return months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
+        }
+
+        if(now.toDateString() === date.toDateString()) {
+            if(date.getHours() > now.getHours()) {
+                return date.getHours() - now.getHours() + ' hours ago' 
+            } else {
+                return 'just now'
+            }
+        }
+
+        if(now.getFullYear() === date.getFullYear()) {
+            return months[date.getMonth()] + ' ' + date.getDate()
+        }
     }
 }
 
