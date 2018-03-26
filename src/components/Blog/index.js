@@ -3,7 +3,6 @@ import { Route, Link, withRouter  } from 'react-router-dom'
 import Post from '../Post'
 import "../../css/style.css"
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
 
 class Blog extends Component {
@@ -34,7 +33,7 @@ class Blog extends Component {
           <div className="content">
             <div className="container">
               <Header/>
-              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post} handleChangePage={this.handleChangePage} type='excerpt'/> )} />
+              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt'/> )} />
               <Route exact path="/:postName" render={({match}) => {
                 const p = this.props.posts.find(post => post.slug === match.params.postName)
                 if(p) {
@@ -48,10 +47,9 @@ class Blog extends Component {
               } />
               <Route exact path="/category/:categoryName" render={({match}) => {
                 const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
-                
                 return (
                   this.props.posts.filter(post => post.categories[0] === categoryID)
-                  .map(post => <Post data={post} handleChangePage={this.handleChangePage} type='excerpt'/>)
+                  .map(post => <Post data={post} handleChangePage={this.handleChangePage} key={post.id} type='excerpt'/>)
                 )
               }
              } />

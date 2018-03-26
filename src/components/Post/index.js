@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 
 class Post extends Component {
@@ -18,10 +17,8 @@ class Post extends Component {
                 </div>
                 <h2>
                 <i className="emoji">{data.acf.emoji}</i>
-                <a onClick={this.props.handleChangePage.bind(null, data.slug)}>{data.title.rendered}</a>
-                {/* <Link to={data.slug}>
-                    {data.title.rendered}
-                </Link> */}
+                {/* <a onClick={this.props.handleChangePage.bind(null, data.slug)}>{data.title.rendered}</a> */}
+                <Link to={'/' + data.slug}>{data.title.rendered}</Link>
                 </h2>
                 <div className="article__bottom-details">
                 <a className="details__datetime">2 days ago</a>
