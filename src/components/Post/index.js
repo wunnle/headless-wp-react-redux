@@ -4,30 +4,99 @@ import { connect } from 'react-redux'
 import htmlToText from "html-to-text"
 
 class Post extends Component {
+    constructor(props) {
+        super(props)
+        this.article = React.createRef()
+        this.state = {
+            open: false,
+            type: this.props.type
+        }
+    }
+
+
+    openArticle = () => {
+        const art = this.article.current
+
+        const width = art.clientWidth
+        const height = art.clientHeight
+        const top = art.getBoundingClientRect().top
+        const left = art.getBoundingClientRect().left
+
+        if(!this.state.open) {
+            this.setState({
+                savedPos: {
+                    left: left,
+                    top: top
+                },
+                style: {
+                    position: 'fixed',
+                    left: left,
+                    top: top,
+                    height: height
+                },
+                shadowStyle: {
+                    width: width,
+                    height: height
+                },
+                fullScreen: true,
+                type: 'full',
+                className: 'article--animating'
+            })
+
+            setTimeout(() =>
+                this.setState({
+                    style: {
+                        zIndex: 10,
+                    },
+                    className: 'article--animated'
+                }),
+                0
+            )
+
+            setTimeout(() => {
+                let copy = {...this.state.style}
+                copy.overflow = "auto"
+                this.setState({
+                    style: copy,
+                    className: 'article--post-animated'
+                });
+            }, 550);
+
+            document.querySelector("body").classList.add("no-overflow");
+
+        }
+
+    }
+
+
+
     render() {
         const data = this.props.data
-        const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
+        const content = (this.state.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = this.calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
 
         return (
-            <div className="article">
-                <div className="article__top-details">
-                {
-                    (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
-                }
-                </div>
-                <h2>
-                <i className="emoji">{data.acf.emoji}</i>
-                {/* <a onClick={this.props.handleChangePage.bind(null, data.slug)}>{data.title.rendered}</a> */}
-                <Link to={'/' + data.slug}>{data.title.rendered}</Link>
-                </h2>
-                <div className="article__bottom-details">
-                <a className="details__datetime">{dateTime}</a>
-                <a>{timeToRead} min read</a>
-                </div>
-                <div className="article__content" dangerouslySetInnerHTML={{ __html: content}}> 
+            <div className={`article ${this.state.className}`} ref={this.article} style={this.state.style}>
+                <div className="article-inner">
+                    <div className="article__top-details">
+                        {
+                            (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
+                        }
+                    </div>
+                    <h2>
+                        <i className="emoji">{data.acf.emoji}</i>
+                        {/* <a onClick={this.props.handleChangePage.bind(null, data.slug)}>{data.title.rendered}</a> */}
+                        {/* <Link to={'/' + data.slug}>{data.title.rendered}</Link> */}
+                        <a onClick={this.openArticle.bind(null, `article-${data.id}`)}>{data.title.rendered}</a>
+                    </h2>
+                    <div className="article__bottom-details">
+                        <a className="details__datetime">{dateTime}</a>
+                        <a>{timeToRead} min read</a>
+                    </div>
+                    <div className="article__content" dangerouslySetInnerHTML={{ __html: content }}>
+                    </div>
                 </div>
             </div>
         )
