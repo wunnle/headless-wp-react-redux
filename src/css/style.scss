@@ -40,7 +40,7 @@ a:hover {
 }
 
 .container {
-    width: 880px;
+    width: 1260px;
     max-width: 100%;
     margin: auto;
     padding: 0 40px;
@@ -73,6 +73,7 @@ i.papership-bw {
 .content {
     padding-top: 50px;
     flex: 1;
+    
 }
 
 header {
@@ -85,7 +86,7 @@ header {
     position: fixed;
     z-index: 20;
     top: 0;
-    width: 600px;
+    width: 100%;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.96);
@@ -156,6 +157,14 @@ header i.papership {
 
 /* article */
 
+.articles {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 100px 0;
+}
+
 .article {
     //transform: translateY(30px);
     transition: height .45s $cubicN, left .45s $cubicN, top .45s $cubicN, opacity 0.5s ease-in, padding 0.2s ease-in-out, width 0.3s ease-in, transform .45s $cubicN, box-shadow 1s ease-in-out; //@include animation( 'article-anim 0.5s normal forwards');
@@ -164,13 +173,21 @@ header i.papership {
     //opacity: 0.4;
     display: inline-block;
     background: rgba(255, 255, 255, 1);
-    padding: 30px 30px 100px 100px;
-    padding: 50px 100px;
-    width: 700px;
-    width: 800px;
+    padding: 20px;
     box-sizing: border-box;
     box-shadow: 0 4px 60px rgba(0, 0, 0, 0.0), 0 4px 60px 300px rgba(255, 255, 255, 0);
-    border-radius: 10px; //transform: translateX(-55px);
+    border-radius: 10px;
+    background-size: cover;
+
+    &__inner {
+        display: flex;
+        height: 100%;
+        
+        hgroup {
+            height: auto;
+            align-self: flex-end;
+        }
+    }
 
     &__content {
         font-size: 19px;
@@ -189,7 +206,7 @@ header i.papership {
         font-size: 18px;
         font-size: 32px;
         line-height: 1em;
-        font-weight: 600;
+        font-weight: 700;
         position: relative;
         transition: all 0.35s ease-in;
         cursor: pointer;
@@ -225,6 +242,36 @@ header i.papership {
     }
     &::-webkit-scrollbar-thumb:window-inactive {
         background: rgba(255, 0, 0, 0.01);
+    }
+
+    &[data-type='excerpt'] {
+        width: 370px;
+        box-sizing: border-box;
+        height: 500px;
+        align-self: flex-start;
+        vertical-align: top;
+        border-radius: 3px;
+        margin-bottom: 30px;
+
+        .article__top-details a {
+            color: white;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        h2 a,
+        article h2 a:hover {
+            font-size: 37px;
+            color: white;
+            cursor: default;
+        }
+
+        .article__bottom-details a {
+            color: white;
+            opacity: 0.6;
+            font-size: 11px;
+            margin-top: 5px;
+        }
     }
 }
 
@@ -371,7 +418,6 @@ article.active {
     }
     &__bottom-details {
         margin-top: 8px;
-        margin-bottom: 30px;
         display: flex;
     }
 

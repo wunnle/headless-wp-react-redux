@@ -33,7 +33,11 @@ class Blog extends Component {
           <div className="content">
             <div className="container">
               <Header/>
-              <Route exact path="/" render={() => this.props.posts.map(post => <Post data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt'/> )} />
+              <div className="articles">
+                <Route exact path="/" render={() => this.props.posts.map(post => <Link to={post.slug}>
+                  <Post data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt' />
+                </Link>)} />
+              </div>
               <Route exact path="/:postName" render={({match}) => {
                 const p = this.props.posts.find(post => post.slug === match.params.postName)
                 if(p) {

@@ -7,28 +7,36 @@ class Post extends Component {
     render() {
         const data = this.props.data
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
+        const type = (this.props.type === 'excerpt') ? 'excerpt' : 'single'
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = this.calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
+        const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
 
         return (
-            <div className="article">
-                <div className="article__top-details">
-                {
-                    (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
-                }
-                </div>
-                <h2>
-                <i className="emoji">{data.acf.emoji}</i>
-                {/* <a onClick={this.props.handleChangePage.bind(null, data.slug)}>{data.title.rendered}</a> */}
-                <Link to={'/' + data.slug}>{data.title.rendered}</Link>
-                </h2>
-                <div className="article__bottom-details">
-                <a className="details__datetime">{dateTime}</a>
-                <a>{timeToRead} min read</a>
-                </div>
-                <div className="article__content" dangerouslySetInnerHTML={{ __html: content}}> 
-                </div>
+            <div className="article" data-type={type} style={{backgroundImage: `url(${featuredImg})`}}>
+                <div className="article__inner">
+                    <hgroup>
+                        <div className="article__top-details">
+                            {
+                                (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
+                            }
+                        </div>
+                        <h2>
+                            {(type !== 'excerpt') &&
+                                <i className="emoji">{data.acf.emoji}</i>
+                            }
+                            <Link to={'/' + data.slug}>{data.title.rendered}</Link>
+                        </h2>
+                        <div className="article__bottom-details">
+                            <a className="details__datetime">{dateTime}</a>
+                            <a>{timeToRead} min read</a>
+                        </div>
+                    </hgroup>
+                    {(type !== 'excerpt') &&
+                        <div className="article__content" dangerouslySetInnerHTML={{ __html: content }}></div>
+                    }      
+                </div>         
             </div>
         )
     }
