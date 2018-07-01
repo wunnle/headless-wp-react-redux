@@ -29,10 +29,11 @@ class Blog extends Component {
       console.log(typeof(this.props.categories))
       console.log(this.props.categories)
       return (
-        <div className="App">
+        <div className="blog">
           <div className="content">
             <div className="container">
               <Header/>
+              <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
               <div className="articles">
                 <Route exact path="/" render={() => this.props.posts.map(post => <Link to={post.slug}>
                   <Post data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt' />
