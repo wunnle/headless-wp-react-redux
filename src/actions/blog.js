@@ -1,11 +1,11 @@
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 // Fetching blog posts
 
 export function fetchPosts(url) {
   return dispatch => {
     dispatch(fetchPostsBegin())
-    return fetch("http://wunnle.com/headless/wp-json/wp/v2/article?_embed")
+    return fetch("https://wunnle.com/headless/wp-json/wp/v2/article?_embed")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -43,7 +43,7 @@ export const fetchPostsFail = (error) => ({
 export function fetchCategories() {
   return dispatch => {
     dispatch(fetchCategoriesBegin())
-    return fetch("http://wunnle.com/headless/wp-json/wp/v2/categories")
+    return fetch("https://wunnle.com/headless/wp-json/wp/v2/categories")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
