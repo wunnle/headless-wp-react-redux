@@ -35,7 +35,7 @@ class Blog extends Component {
               <Header/>
               <div className="articles">
                 <Route exact path="/" render={() => this.props.posts.map(post => <Link to={post.slug}>
-                  <Post data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt' />
+                  <PostCard data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt' />
                 </Link>)} />
               </div>
               <Route exact path="/:postName" render={({match}) => {
@@ -85,6 +85,24 @@ const Header = (props) => (
   </header>
 );
 
+const PostCard = props => {
+  const bgUrl = props.data.better_featured_image ? props.data.better_featured_image.source_url : ''
+  return (
+  <div className="postCard" 
+  style={{backgroundImage: `url(${bgUrl})`}}
+  >
+
+      <div className="postCard__inner">
+      <div className="postCard__cat">Category</div>
+      <h2>The Motion Picture</h2>
+      <div>
+        <span className="postCard__date">Feb 25</span>
+        <span className="postCard__read-time">4 min read</span>
+      </div>
+      </div>
+  </div>
+)
+}
 
 const mapStateToProps = state => ({
   posts: state.blog.posts,
