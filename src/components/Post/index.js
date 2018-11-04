@@ -29,8 +29,8 @@ class Post extends Component {
                             <Link to={'/' + data.slug}>{data.title.rendered}</Link>
                         </h2>
                         <div className="article__bottom-details">
-                            <a className="details__datetime">{dateTime}</a>
-                            <a>{timeToRead} min read</a>
+                            <button className="details__datetime">{dateTime}</button>
+                            <button>{timeToRead} min read</button>
                         </div>
                     </hgroup>
                     {(type !== 'excerpt') &&
@@ -59,7 +59,7 @@ class Post extends Component {
     
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         const now = new Date()
-        if (now.getFullYear() ==! date.getFullYear()) {
+        if (now.getFullYear() !== date.getFullYear()) {
           return months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
         }
 

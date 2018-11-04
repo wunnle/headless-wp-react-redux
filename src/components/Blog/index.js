@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Link, withRouter  } from 'react-router-dom'
 import Post from '../Post'
-import "../../css/style.css"
+import "../../css/style.scss"
 import { connect } from 'react-redux'
 import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
 
