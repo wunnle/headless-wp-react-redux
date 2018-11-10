@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Route, Link, withRouter  } from 'react-router-dom'
 import Post from '../Post'
+import PostCard from '../PostCard'
 import "../../css/style.scss"
 import { connect } from 'react-redux'
 import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
+import htmlToText from "html-to-text"
 
 class Blog extends Component {
   componentDidMount() {
@@ -11,9 +13,31 @@ class Blog extends Component {
     this.props.dispatch(fetchCategories())
   }
 
-  handleChangePage = (slug) => {
+  handleChangePage = slug => {
     console.log('handleChangePage')
     this.props.dispatch(changePage(slug))
+  }
+
+  getCategoryNameFromId = categoryId => {
+    this.props.categories.forEach(cat => {
+      if(categoryId === cat.id) {
+        console.log(`found it!`, cat.id, cat.name)
+        return cat.name
+      }
+    })
+  }
+
+  calcTimeToRead = content => {
+    let words, imgs = 0;
+
+    const wps = 0.218340611, ips = 12;
+
+    let el = document.createElement("html");
+    el.innerHTML = content;
+    imgs = el.querySelectorAll("img").length;
+
+    words = htmlToText.fromString(content).length;
+    return Math.floor(Math.floor((words * wps + imgs * ips) / 60));
   }
 
   render() {
@@ -35,15 +59,15 @@ class Blog extends Component {
               <Header/>
               <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
               <div className="articles">
-                <Route exact path="/" render={() => this.props.posts.map(post => <Link to={post.slug}>
-                  <PostCard data={post} key={post.id} handleChangePage={this.handleChangePage} type='excerpt' />
+                <Route exact path="/" render={() => this.props.posts.map(post => <Link to={post.slug} key={post.id}>
+                  <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='excerpt' getCategoryNameFromId={this.getCategoryNameFromId} />
                 </Link>)} />
               </div>
               <Route exact path="/:postName" render={({match}) => {
                 const p = this.props.posts.find(post => post.slug === match.params.postName)
                 if(p) {
                   return (
-                    <Post data={p} handleChangePage={this.handleChangePage} type='solo'/>
+                    <Post data={p} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='solo'/>
                   )
                 } else {
                   return ('404')
@@ -86,24 +110,7 @@ const Header = (props) => (
   </header>
 );
 
-const PostCard = props => {
-  const bgUrl = props.data.better_featured_image ? props.data.better_featured_image.source_url : ''
-  return (
-  <div className="postCard" 
-  style={{backgroundImage: `url(${bgUrl})`}}
-  >
 
-      <div className="postCard__inner">
-      <div className="postCard__cat">Category</div>
-      <h2>The Motion Picture</h2>
-      <div>
-        <span className="postCard__date">Feb 25</span>
-        <span className="postCard__read-time">4 min read</span>
-      </div>
-      </div>
-  </div>
-)
-}
 
 const mapStateToProps = state => ({
   posts: state.blog.posts,

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import htmlToText from "html-to-text"
 
 class Post extends Component {
     render() {
@@ -9,7 +8,7 @@ class Post extends Component {
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         const type = (this.props.type === 'excerpt') ? 'excerpt' : 'single'
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
-        const timeToRead = this.calcTimeToRead(data.content.rendered)
+        const timeToRead = this.props.calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
         const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
 
@@ -39,19 +38,6 @@ class Post extends Component {
                 </div>         
             </div>
         )
-    }
-
-    calcTimeToRead = content => {
-        let words, imgs = 0;
-    
-        const wps = 0.218340611, ips = 12;
-    
-        let el = document.createElement("html");
-        el.innerHTML = content;
-        imgs = el.querySelectorAll("img").length;
-    
-        words = htmlToText.fromString(content).length;
-        return Math.floor(Math.floor((words * wps + imgs * ips) / 60));
     }
 
     calcDateTime = t => {
