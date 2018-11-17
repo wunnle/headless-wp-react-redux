@@ -51,39 +51,41 @@ class Blog extends Component {
         <div className="content">
           <div className="container">
             <Header />
-                <Route exact path="/" render={() => 
-                    <>
-                    <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
-                    <div className="articles">
-                      {
-                        this.props.loading ?
-                          <>
-                            <LoadingCard animationDelay='0s' />
-                            <LoadingCard animationDelay='0.2s' />
-                            <LoadingCard animationDelay='0.4s' />
-                            <LoadingCard animationDelay='0.6s' />
-                            <LoadingCard animationDelay='0.8s' />
-                            <LoadingCard animationDelay='1s' />
-                            <LoadingCard animationDelay='2s' />
-                            <LoadingCard />
-                            <LoadingCard />
-                          </>
-                        :
-                        this.props.posts.map(post => <Link to={post.slug} key={post.id}>
-                          <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='excerpt' getCategoryNameFromId={this.getCategoryNameFromId} />
-                        </Link>)
-                      }
-                    </div>
-                    </>
-                } />
-              }
+            <Route exact path="/" render={() =>
+              <>
+                <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
+                <div className="articles">
+                  {
+                    this.props.loading ?
+                      <>
+                        <LoadingCard animationDelay='0s' />
+                        <LoadingCard animationDelay='0.2s' />
+                        <LoadingCard animationDelay='0.4s' />
+                        <LoadingCard animationDelay='0.6s' />
+                        <LoadingCard animationDelay='0.8s' />
+                        <LoadingCard animationDelay='1s' />
+                        <LoadingCard animationDelay='2s' />
+                        <LoadingCard />
+                        <LoadingCard />
+                      </>
+                      :
+                      this.props.posts.map(post => <Link to={post.slug} key={post.id}>
+                        <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='excerpt' getCategoryNameFromId={this.getCategoryNameFromId} />
+                      </Link>)
+                  }
+                </div>
+              </>
+            } />
             <Route exact path="/:postName" render={({ match }) => {
               const p = this.props.posts.find(post => post.slug === match.params.postName)
-              if (p) {
+              if(this.props.loading) {
+                return 'loading'
+              } else if(p) {
                 return (
                   <Post data={p} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='solo' />
                 )
               } else {
+                {console.log(this.props)}
                 return ('404')
               }
             }

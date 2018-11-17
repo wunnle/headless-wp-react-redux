@@ -6,6 +6,7 @@ class Post extends Component {
     render() {
         const data = this.props.data
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
+        console.log(content)
         const type = (this.props.type === 'excerpt') ? 'excerpt' : 'single'
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = this.props.calcTimeToRead(data.content.rendered)
@@ -22,14 +23,11 @@ class Post extends Component {
                             }
                         </div>
                         <h2>
-                            {(type !== 'excerpt') &&
-                                <i className="emoji">{data.acf.emoji}</i>
-                            }
                             <Link to={'/' + data.slug}>{data.title.rendered}</Link>
                         </h2>
                         <div className="article__bottom-details">
-                            <button className="details__datetime">{dateTime}</button>
-                            <button>{timeToRead} min read</button>
+                            <span className="details__datetime">{dateTime}</span>
+                            <span>{timeToRead} min read</span>
                         </div>
                     </hgroup>
                     {(type !== 'excerpt') &&
