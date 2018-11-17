@@ -7,6 +7,31 @@ a {
   text-decoration: none;
 }
 
+.postCard.loadingCard {
+  background: #EAE3E3;
+  animation: 1s infinite loadingCardColorChange;
+  box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.05);
+  opacity: 0.8;
+}
+
+@keyframes loadingCardColorChange {
+  0% {
+    background: #EEECEC;
+  }
+
+  33% {
+  }
+
+  50% {
+    background: rgb(240, 236, 236); 
+    transform: scale(1.03);
+  }
+
+  100% {
+    background: #EEECEC;
+  }
+}
+
 .postCard {
   display: flex;
   background-position: center bottom;

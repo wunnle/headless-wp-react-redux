@@ -13,7 +13,7 @@ class Post extends Component {
         const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
 
         return (
-            <div className="article" data-type={type} style={{backgroundImage: `url(${featuredImg})`}}>
+            <div className="article" data-type={type}>
                 <div className="article__inner">
                     <hgroup>
                         <div className="article__top-details">
