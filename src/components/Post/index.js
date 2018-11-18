@@ -17,45 +17,43 @@ class Post extends Component {
             <div className="article" data-type={type}>
                 <div className="article__inner">
                     <hgroup>
-                        <div className="article__top-details">
-                            {
-                                (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
-                            }
-                        </div>
                         <h2>
                             <Link to={'/' + data.slug}>{data.title.rendered}</Link>
                         </h2>
                         <div className="article__bottom-details">
+                            {
+                                (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
+                            }
                             <span className="details__datetime">{dateTime}</span>
                             <span>{timeToRead} min read</span>
                         </div>
                     </hgroup>
                     {(type !== 'excerpt') &&
                         <div className="article__content" dangerouslySetInnerHTML={{ __html: content }}></div>
-                    }      
-                </div>         
+                    }
+                </div>
             </div>
         )
     }
 
     calcDateTime = t => {
         const date = new Date(t)
-    
+
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         const now = new Date()
         if (now.getFullYear() !== date.getFullYear()) {
-          return months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
+            return months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
         }
 
-        if(now.toDateString() === date.toDateString()) {
-            if(date.getHours() > now.getHours()) {
-                return date.getHours() - now.getHours() + ' hours ago' 
+        if (now.toDateString() === date.toDateString()) {
+            if (date.getHours() > now.getHours()) {
+                return date.getHours() - now.getHours() + ' hours ago'
             } else {
                 return 'just now'
             }
         }
 
-        if(now.getFullYear() === date.getFullYear()) {
+        if (now.getFullYear() === date.getFullYear()) {
             return months[date.getMonth()] + ' ' + date.getDate()
         }
     }
@@ -71,6 +69,6 @@ const mapStateToProps = state => ({
     categories: state.blog.categories,
     loading: state.blog.loading,
     error: state.blog.error
-  })
-  
+})
+
 export default connect(mapStateToProps)(Post)

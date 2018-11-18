@@ -3,7 +3,8 @@ import { Route, Link, withRouter } from 'react-router-dom'
 import Post from '../Post'
 import PostCard from '../PostCard'
 import LoadingCard from '../LoadingCard'
-import "../../css/style.scss"
+import '../../css/style.scss'
+import logo from '../../img/papership.svg';
 import { connect } from 'react-redux'
 import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
 import htmlToText from "html-to-text"
@@ -49,8 +50,8 @@ class Blog extends Component {
     return (
       <div className="blog">
         <div className="content">
+          <Header />
           <div className="container">
-            <Header />
             <Route exact path="/" render={() =>
               <>
                 <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
@@ -116,10 +117,7 @@ const Footer = (props) => (
 
 const Header = (props) => (
   <header>
-    <i className="papership" />
-    <h1 onClick={props.handleHomeClick}>
-      {<Link to="/">blog</Link>}
-    </h1>
+      {<Link to="/"><img src={logo} width="70px" alt=""/> </Link>}
   </header>
 );
 

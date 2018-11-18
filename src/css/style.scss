@@ -83,10 +83,10 @@ $cubicN: cubic-bezier(0.855, -0.505, 0.225, 1.275);
 
 header {
   text-align: center;
-}
-
-.blog {
-  padding-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
 }
 
 .blog-description {
@@ -114,28 +114,29 @@ header {
 .article {
   width: 740px;
   max-width: 100%;
-  margin: 80px auto 100px;
+  margin: -30px auto 100px;
   padding: 0 16px;
   box-sizing: border-box;
-  &__top-details {
-    a {
-      font-weight: 500;
-      line-height: normal;
-      font-size: 16px;
-      color: #0079FF;
-      text-transform: uppercase;
-      margin-bottom: -8px;
-      display: block;
-    }
-  }
+
   &__bottom-details {
+    text-align: center;
     span {
-      font-size: 12.3636px;
+      font-size: 13px;
       letter-spacing: 0.04em;
       color: rgba(150, 150, 150, 0.8);
       font-weight: 500;
       text-transform: uppercase;
-      margin-right: 10px;
+      margin-right: 14px;
+    }
+    a {
+      font-weight: 500;
+      line-height: normal;
+      font-size: 13px;
+      color: #0079FF;
+      text-transform: uppercase;
+      margin-bottom: -8px;
+      margin-right: 14px;
+      letter-spacing: 0.04em;
     }
     margin-bottom: 80px;
   }
@@ -155,5 +156,6 @@ header {
   }
   h2 {
     margin: 10px 0;
+    text-align: center;
   }
 }
