@@ -85,8 +85,24 @@ header {
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 160px;
+  height: 80px;
+  padding: 0px 30px;
+  margin-bottom: 50px;
+
+  .logo-link {
+    img {
+      width: 50px;
+    }
+  }
+
+  nav {
+    margin-left: auto;
+
+    li {
+      list-style: none;
+    }
+  }
+
 }
 
 .blog-description {

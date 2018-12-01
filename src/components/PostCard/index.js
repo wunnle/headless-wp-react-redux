@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 
 
 class PostCard extends Component {
@@ -16,7 +18,7 @@ class PostCard extends Component {
   }
 
   render() {
-    const {better_featured_image: bgImg, categories, date, content: {rendered: content}, title: {rendered: title}} = this.props.data;
+    const {better_featured_image: bgImg, categories, date, slug, content: {rendered: content}, title: {rendered: title}} = this.props.data;
     const bgUrl = bgImg && bgImg.source_url;
     const category = this.props.categories.find(cat => cat.id === categories[0]);
     const postDate = new Date(date).toLocaleDateString('en-US', {
@@ -24,7 +26,10 @@ class PostCard extends Component {
       day: 'numeric'
     });
     this.backgroundImageLoader(bgUrl)
-    return (<div className="postCard" style={{
+    return (
+    
+    <Link to={slug}>
+    <div className="postCard" style={{
       background: this.state.bg
     }}>
 
@@ -36,8 +41,9 @@ class PostCard extends Component {
           <span className="postCard__read-time">{this.props.calcTimeToRead(content)} min read</span>
         </div>
       </div>
-    </div>);
-  }
+    </div>
+    </Link>
+    )}
 }
 
 const mapStateToProps = state => ({

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Route, Link, withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import Post from '../Post'
 import PostCard from '../PostCard'
 import LoadingCard from '../LoadingCard'
 import '../../css/style.scss'
-import logo from '../../img/papership.svg';
 import { connect } from 'react-redux'
 import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
 import htmlToText from "html-to-text"
+import { Header } from './Header';
 
 class Blog extends Component {
   componentDidMount() {
@@ -70,9 +70,8 @@ class Blog extends Component {
                         <LoadingCard />
                       </>
                       :
-                      this.props.posts.map(post => <Link to={post.slug} key={post.id}>
-                        <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='excerpt' getCategoryNameFromId={this.getCategoryNameFromId} />
-                      </Link>)
+                      this.props.posts.map(post =>   
+                      <PostCard key={post.id} data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} getCategoryNameFromId={this.getCategoryNameFromId} />)
                   }
                 </div>
               </>
@@ -86,16 +85,19 @@ class Blog extends Component {
                   <Post data={p} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} type='solo' />
                 )
               } else {
-                {console.log(this.props)}
                 return ('404')
               }
             }
             } />
             <Route exact path="/category/:categoryName" render={({ match }) => {
               const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
+              {console.log(match.params)}
               return (
-                this.props.posts.filter(post => post.categories[0] === categoryID)
-                  .map(post => <Post data={post} handleChangePage={this.handleChangePage} key={post.id} type='excerpt' />)
+                <div className="articles">
+                <h2>Posts in {match.params.categoryName}</h2>
+                {this.props.posts.filter(post => post.categories[0] === categoryID)
+                  .map(post => <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} key={post.id} type='excerpt' />)}
+                </div>
               )
             }
             } />
@@ -114,14 +116,6 @@ const Footer = (props) => (
     </div>
   </footer>
 )
-
-const Header = (props) => (
-  <header>
-      {<Link to="/"><img src={logo} width="70px" alt=""/> </Link>}
-  </header>
-);
-
-
 
 const mapStateToProps = state => ({
   posts: state.blog.posts,

@@ -11,7 +11,7 @@ class Post extends Component {
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = this.props.calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
-        const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
+        // const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
 
         return (
             <div className="article" data-type={type}>
