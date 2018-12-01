@@ -17,18 +17,23 @@ class PostCard extends Component {
     }
   }
 
-  render() {
-    const {better_featured_image: bgImg, categories, date, slug, content: {rendered: content}, title: {rendered: title}} = this.props.data;
+  componentDidMount() {
+    const { better_featured_image: bgImg } = this.props.data
     const bgUrl = bgImg && bgImg.source_url;
+    this.backgroundImageLoader(bgUrl)
+  }
+
+  render() {
+    console.log('rendering!')
+    const {categories, date, slug, content: {rendered: content}, title: {rendered: title}} = this.props.data;
     const category = this.props.categories.find(cat => cat.id === categories[0]);
     const postDate = new Date(date).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric'
     });
-    this.backgroundImageLoader(bgUrl)
     return (
     
-    <Link to={slug}>
+    <Link to={`/${slug}`}>
     <div className="postCard" style={{
       background: this.state.bg
     }}>

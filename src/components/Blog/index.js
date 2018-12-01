@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import Post from '../Post'
 import PostCard from '../PostCard'
-import LoadingCard from '../LoadingCard'
 import '../../css/style.scss'
 import { connect } from 'react-redux'
 import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
 import htmlToText from "html-to-text"
 import { Header } from './Header';
+import { LoadingCards } from './LoadingCards';
+
 
 class Blog extends Component {
   componentDidMount() {
+    console.log('componentDidMount!')
     this.props.dispatch(fetchPosts())
     this.props.dispatch(fetchCategories())
   }
@@ -57,21 +59,9 @@ class Blog extends Component {
                 <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
                 <div className="articles">
                   {
-                    this.props.loading ?
-                      <>
-                        <LoadingCard animationDelay='0s' />
-                        <LoadingCard animationDelay='0.2s' />
-                        <LoadingCard animationDelay='0.4s' />
-                        <LoadingCard animationDelay='0.6s' />
-                        <LoadingCard animationDelay='0.8s' />
-                        <LoadingCard animationDelay='1s' />
-                        <LoadingCard animationDelay='2s' />
-                        <LoadingCard />
-                        <LoadingCard />
-                      </>
-                      :
-                      this.props.posts.map(post =>   
-                      <PostCard key={post.id} data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} getCategoryNameFromId={this.getCategoryNameFromId} />)
+                    this.props.loading ? <LoadingCards /> :
+                    this.props.posts.map(post =>   
+                    <PostCard key={post.id} data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} getCategoryNameFromId={this.getCategoryNameFromId} />)
                   }
                 </div>
               </>
@@ -90,15 +80,22 @@ class Blog extends Component {
             }
             } />
             <Route exact path="/category/:categoryName" render={({ match }) => {
-              const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
-              {console.log(match.params)}
-              return (
-                <div className="articles">
-                <h2>Posts in {match.params.categoryName}</h2>
-                {this.props.posts.filter(post => post.categories[0] === categoryID)
-                  .map(post => <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} key={post.id} type='excerpt' />)}
-                </div>
-              )
+                if(this.props.categories && this.props.categories.length > 0) {
+                  const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
+                  {console.log(match.params)}
+                  return (
+                    <>
+                    <h2>Posts in {match.params.categoryName}</h2>
+                    <div className="articles">
+                    {this.props.posts.filter(post => post.categories[0] === categoryID)
+                      .map(post => <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} key={post.id} type='excerpt' />)}
+                    </div>
+                    </>
+                  )
+                } else {
+                  return <LoadingCards/>
+                }
+
             }
             } />
           </div>

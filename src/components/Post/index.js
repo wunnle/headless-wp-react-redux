@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 class Post extends Component {
     render() {
+        console.log('rendering!')
         const data = this.props.data
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         console.log(content)
