@@ -81,13 +81,13 @@ class Blog extends Component {
             } />
             <Route exact path="/category/:categoryName" render={({ match }) => {
                 if(this.props.categories && this.props.categories.length > 0) {
-                  const categoryID = this.props.categories.find(category => category.slug === match.params.categoryName).id
-                  {console.log(match.params)}
+                  const category = this.props.categories.find(category => category.slug === match.params.categoryName)
+                  const { id, name } = category
                   return (
                     <>
-                    <h2>Posts in {match.params.categoryName}</h2>
+                    <h2>Posts in {name}</h2>
                     <div className="articles">
-                    {this.props.posts.filter(post => post.categories[0] === categoryID)
+                    {this.props.posts.filter(post => post.categories[0] === id)
                       .map(post => <PostCard data={post} handleChangePage={this.handleChangePage} calcTimeToRead={this.calcTimeToRead} key={post.id} type='excerpt' />)}
                     </div>
                     </>
@@ -95,7 +95,6 @@ class Blog extends Component {
                 } else {
                   return <LoadingCards/>
                 }
-
             }
             } />
           </div>
