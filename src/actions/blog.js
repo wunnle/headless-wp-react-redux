@@ -18,7 +18,6 @@ export function fetchAllPosts(url) {
 }
 
 export function fetchPostsOnCategory(category) {
-
   let categoryString = ''
   category.forEach(category => {
     categoryString += `${category},`  
@@ -37,6 +36,22 @@ export function fetchPostsOnCategory(category) {
       .catch(error => dispatch(fetchPostsFail(error)))
   }
 }
+
+export function fetchPostBySlug(slug) {
+  return dispatch => {
+    dispatch(fetchPostsBegin())
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?slug=${slug}`)
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(fetchPostsSuccess(json))
+        console.log(json)
+        return json
+      })
+      .catch(error => dispatch(fetchPostsFail(error)))
+  }
+}
+
 
 const handleErrors = (res) => {
   if(!res.ok) {
