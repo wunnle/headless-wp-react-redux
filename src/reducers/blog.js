@@ -5,42 +5,59 @@ const initialState = {
   categories: [],
   currentURL: '/',
   loading: false,
+  allPostsAreLoaded: false,
+  allCategoriesAreLoaded: false,
   error: null
 }
 
 export default function blog(state = initialState, action) {
   switch (action.type) {
-    case 'FETCH_POSTS_BEGIN':
+    case 'FETCH_ALL_POSTS_BEGIN':
     return {
       ...state,
-      loading: true
     }
 
-    case 'FETCH_POSTS_SUCCESS':
+    case 'FETCH_ALL_POSTS_SUCCESS':
     return {
       ...state,
       posts: action.payload.posts,
-      loading: state.categories.length > 0 ? false : true
+      allPostsAreLoaded: true
     }
 
-    case 'FETCH_POSTS_FAIL':
+    case 'FETCH_ALL_POSTS_FAIL':
     return {
       ...state,
       error: action.payload.error,
       posts: []
     }
 
+    case 'FETCH_SINGLE_POST_BEGIN':
+    return {
+      ...state,
+    }
+
+    case 'FETCH_SINGLE_POST_SUCCESS':
+    return {
+      ...state,
+      posts: [...state.posts, ...action.payload.post],
+    }
+
+    case 'FETCH_SINGLE_POST_FAIL':
+    return {
+      ...state,
+      error: action.payload.error
+    }    
+
     case 'FETCH_CATEGORIES_BEGIN':
     return {
       ...state,
-      loading: true,
     }
 
     case 'FETCH_CATEGORIES_SUCCESS':
     return {
       ...state,
       categories: action.payload.categories,
-      loading: state.posts.length > 0 ? false : true
+      allCategoriesAreLoaded: true
     }
 
     case 'NAVIGATE_TO_POST':

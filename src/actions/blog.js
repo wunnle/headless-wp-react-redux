@@ -4,18 +4,33 @@ import { push } from 'connected-react-router'
 
 export function fetchAllPosts(url) {
   return dispatch => {
-    dispatch(fetchPostsBegin())
+    dispatch(fetchAllPostsBegin())
     return fetch("https://wunnle.com/headless/wp-json/wp/v2/article")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(fetchPostsSuccess(json))
+        dispatch(fetchAllPostsSuccess(json))
         console.log(json)
         return json
       })
-      .catch(error => dispatch(fetchPostsFail(error)))
+      .catch(error => dispatch(fetchAllPostsFail(error)))
   }
 }
+
+export const fetchAllPostsBegin = () => ({
+  type: 'FETCH_ALL_POSTS_BEGIN'
+})
+
+export const fetchAllPostsSuccess = (posts) => ({
+  type: 'FETCH_ALL_POSTS_SUCCESS',
+  payload: { posts }
+})
+
+export const fetchAllPostsFail = (error) => ({
+  type: 'FETCH_ALL_POSTS_FAIL',
+  payload: { error }
+})
+
 
 export function fetchPostsOnCategory(category) {
   let categoryString = ''
@@ -24,33 +39,54 @@ export function fetchPostsOnCategory(category) {
   });
 
   return dispatch => {
-    dispatch(fetchPostsBegin())
+    dispatch(fetchAllPostsBegin())
     return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?categories=${categoryString}`)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(fetchPostsSuccess(json))
+        dispatch(fetchAllPostsSuccess(json))
         console.log(json)
         return json
       })
-      .catch(error => dispatch(fetchPostsFail(error)))
+      .catch(error => dispatch(fetchAllPostsFail(error)))
   }
 }
 
-export function fetchPostBySlug(slug) {
+export function fetchSinglePost(slug) {
+  console.log(`fetching single post for ${slug}`)
   return dispatch => {
-    dispatch(fetchPostsBegin())
+    dispatch(fetchSinglePostBegin())
     return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?slug=${slug}`)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(fetchPostsSuccess(json))
+        console.log('SINGLE POST', json)
+        dispatch(fetchSinglePostSuccess(json))
         console.log(json)
         return json
       })
-      .catch(error => dispatch(fetchPostsFail(error)))
   }
 }
+
+export const fetchSinglePostBegin = () => ({
+  type: 'FETCH_SINGLE_POST_BEGIN'
+})
+
+export const fetchSinglePostSuccess = (post) => {
+  console.log(`fetching single post success!`, post);
+
+  return {
+  type: 'FETCH_SINGLE_POST_SUCCESS',
+  payload: { post }
+}
+}
+  
+
+export const fetchSinglePostFail = (error) => ({
+  type: 'FETCH_SINGLE_POST_FAIL',
+  payload: { error }
+})
+
 
 
 const handleErrors = (res) => {
@@ -59,20 +95,6 @@ const handleErrors = (res) => {
   }
   return res
 }
-
-export const fetchPostsBegin = () => ({
-  type: 'FETCH_POSTS_BEGIN'
-})
-
-export const fetchPostsSuccess = (posts) => ({
-  type: 'FETCH_POSTS_SUCCESS',
-  payload: { posts }
-})
-
-export const fetchPostsFail = (error) => ({
-  type: 'FETCH_POSTS_FAIL',
-  payload: { error }
-})
 
 // Fetch blog categories
 

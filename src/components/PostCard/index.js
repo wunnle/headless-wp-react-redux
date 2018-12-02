@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { calcTimeToRead } from '../Blog/common/blogHelpers'
 
 
 
@@ -43,7 +44,7 @@ class PostCard extends Component {
         <h2>{title}</h2>
         <div>
           <span className="postCard__date">{postDate}</span>
-          <span className="postCard__read-time">{this.props.calcTimeToRead(content)} min read</span>
+          <span className="postCard__read-time">{calcTimeToRead(content)} min read</span>
         </div>
       </div>
     </div>
