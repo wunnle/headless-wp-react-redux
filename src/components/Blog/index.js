@@ -4,7 +4,7 @@ import Post from '../Post'
 import PostCard from '../PostCard'
 import '../../css/style.scss'
 import { connect } from 'react-redux'
-import { fetchPosts, fetchCategories, changePage } from "../../actions/blog"
+import { fetchAllPosts, fetchCategories, changePage } from "../../actions/blog"
 import htmlToText from "html-to-text"
 import { Header } from './Header';
 import { LoadingCards } from './LoadingCards';
@@ -13,7 +13,7 @@ import { LoadingCards } from './LoadingCards';
 class Blog extends Component {
   componentDidMount() {
     console.log('componentDidMount!')
-    this.props.dispatch(fetchPosts())
+    this.props.dispatch(fetchAllPosts())
     this.props.dispatch(fetchCategories())
   }
 

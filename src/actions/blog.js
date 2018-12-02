@@ -2,10 +2,31 @@ import { push } from 'connected-react-router'
 
 // Fetching blog posts
 
-export function fetchPosts(url) {
+export function fetchAllPosts(url) {
   return dispatch => {
     dispatch(fetchPostsBegin())
-    return fetch("https://wunnle.com/headless/wp-json/wp/v2/article?_embed")
+    return fetch("https://wunnle.com/headless/wp-json/wp/v2/article")
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(fetchPostsSuccess(json))
+        console.log(json)
+        return json
+      })
+      .catch(error => dispatch(fetchPostsFail(error)))
+  }
+}
+
+export function fetchPostsOnCategory(category) {
+
+  let categoryString = ''
+  category.forEach(category => {
+    categoryString += `${category},`  
+  });
+
+  return dispatch => {
+    dispatch(fetchPostsBegin())
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?categories=${categoryString}`)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
