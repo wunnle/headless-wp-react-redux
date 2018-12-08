@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Gist from 'react-gist';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { calcTimeToRead } from '../Blog/common/blogHelpers'
@@ -9,11 +10,18 @@ class Post extends Component {
         const data = this.props.data
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         console.log(content)
+        var splittedContent = content.split(/https:\/\/gist.github.com\/\d+/)
+        var gists = content.match(/https:\/\/gist.github.com\/\d+/)
+        console.log({splittedContent})
+        console.log({gists})
+
+
         const type = (this.props.type === 'excerpt') ? 'excerpt' : 'single'
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
         // const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
+        this.combineArrays(splittedContent, gists)
 
         return (
             <div className="article" data-type={type}>
@@ -31,11 +39,46 @@ class Post extends Component {
                         </div>
                     </hgroup>
                     {(type !== 'excerpt') &&
-                        <div className="article__content" dangerouslySetInnerHTML={{ __html: content }}></div>
+                        //<div className="article__content" dangerouslySetInnerHTML={{ __html: content }}></div>
+                        <div className="article__content">
+                            {this.combineArrays(splittedContent, gists)}
+                        </div>
                     }
                 </div>
             </div>
         )
+    }
+
+    getGistIdFromUrl = url => {
+        return url.match(/\d+/)[0]
+    }
+
+    combineArrays = (array1, array2) => {
+        let finalArray = []
+
+        let longerArr
+        let shorterArr 
+
+        if(array1.length > array2.length) {
+            longerArr = array1
+            shorterArr = array2
+        } else {
+            longerArr = array2
+            shorterArr = array1
+        }
+
+        for (var i = 0; i < longerArr.length; i++) {
+            if(i % 2 === 0) {
+                finalArray.push(<div dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
+                shorterArr[i] && finalArray.push(<Gist id={this.getGistIdFromUrl(shorterArr[i])} /> ) 
+            } else {
+                shorterArr[i] && finalArray.push(<Gist id={this.getGistIdFromUrl(shorterArr[i])} /> ) 
+                finalArray.push(<div dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
+            }
+        }
+
+        console.log({finalArray})
+        return finalArray
     }
 
     calcDateTime = t => {
