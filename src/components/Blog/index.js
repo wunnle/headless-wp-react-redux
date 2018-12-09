@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
-import Post from '../Post'
 import PostCard from '../PostCard'
 import '../../css/style.scss'
 import { connect } from 'react-redux'

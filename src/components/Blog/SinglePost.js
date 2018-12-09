@@ -14,7 +14,7 @@ class SinglePost extends Component {
   componentDidMount() {
     const { match, dispatch, posts } = this.props
 
-    if(posts.length === 0 || posts.length > 0 && !posts.find(post => post.slug === match.params.postname)) {
+    if((posts.length === 0 || posts.length > 0) && !posts.find(post => post.slug === match.params.postname)) {
       dispatch(fetchSinglePost(match.params.postname))
       dispatch(fetchCategories())
     }
@@ -22,13 +22,10 @@ class SinglePost extends Component {
 
   render() { 
 
-    const { posts, match, dispatch, categories, allCategoriesAreLoaded } = this.props
+    const { posts, match, allCategoriesAreLoaded } = this.props
     const p = posts.length > 0 ? posts.find(post => post.slug === match.params.postname) : false
 
-    console.log(posts.length, p, allCategoriesAreLoaded)
-
     if(posts.length > 0 && p && allCategoriesAreLoaded ) {
-      console.log('POST DATA', p)
       return <Post data={p} type='solo' />
     } else if (!p && allCategoriesAreLoaded ) {
       return <div>404</div>
@@ -37,20 +34,6 @@ class SinglePost extends Component {
     }
   }
 }
-
-            {/* <Route exact path="/:postName" render={({ match }) => {
-              const p = this.props.posts.find(post => post.slug === match.params.postName)
-              if(this.props.loading) {
-                return 'loading'
-              } else if(p) {
-                return (
-                  <Post data={p}  type='solo' />
-                )
-              } else {
-                return ('404')
-              }
-            }
-            } /> */}
  
 
 const mapStateToProps = state => ({
@@ -59,7 +42,6 @@ const mapStateToProps = state => ({
   loading: state.blog.loading,
   error: state.blog.error,
   allCategoriesAreLoaded: state.blog.allCategoriesAreLoaded
-
 })
 
 export default withRouter(connect(mapStateToProps)(SinglePost))
