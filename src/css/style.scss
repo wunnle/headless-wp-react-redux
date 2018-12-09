@@ -86,13 +86,13 @@ header {
   text-align: center;
   display: flex;
   align-items: center;
-  height: 100px;
+  height: 110px;
   padding: 0px 30px;
   margin-bottom: 50px;
 
   .logo-link {
     img {
-      width: 50px;
+      width: 136px;
     }
   }
 
@@ -112,7 +112,7 @@ header {
   font-weight: 700;
   text-align: center;
   width: 800px;
-  margin: auto;
+  margin: -64px auto 0;
   max-width: 100%;
   line-height: 1.14em;
 }
