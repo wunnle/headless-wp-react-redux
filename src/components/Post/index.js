@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Gist from 'react-gist';
+import Gist from 'super-react-gist';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { calcTimeToRead } from '../Blog/common/blogHelpers'
@@ -10,8 +10,8 @@ class Post extends Component {
         const data = this.props.data
         const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
         console.log(content)
-        var splittedContent = content.split(/https:\/\/gist.github.com\/\d+/)
-        var gists = content.match(/https:\/\/gist.github.com\/\d+/)
+        var splittedContent = content.split(/https:\/\/gist.github.com\/wunnle\/\w*/)
+        var gists = content.match(/https:\/\/gist.github.com\/wunnle\/\w*/g)
         console.log({splittedContent})
         console.log({gists})
 
@@ -50,10 +50,12 @@ class Post extends Component {
     }
 
     getGistIdFromUrl = url => {
-        return url.match(/\d+/)[0]
+        console.log(url.match(/https:\/\/gist.github.com\/wunnle\/(.*)/))
+        return url.match(/https:\/\/gist.github.com\/wunnle\/(\w*)/)[1]
     }
 
     combineArrays = (array1, array2) => {
+        console.log("arrays", array1, array2)
         let finalArray = []
 
         let longerArr
@@ -68,13 +70,8 @@ class Post extends Component {
         }
 
         for (var i = 0; i < longerArr.length; i++) {
-            if(i % 2 === 0) {
-                finalArray.push(<div dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
-                shorterArr[i] && finalArray.push(<Gist id={this.getGistIdFromUrl(shorterArr[i])} /> ) 
-            } else {
-                shorterArr[i] && finalArray.push(<Gist id={this.getGistIdFromUrl(shorterArr[i])} /> ) 
-                finalArray.push(<div dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
-            }
+            finalArray.push(<div dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
+            shorterArr[i] && finalArray.push(<Gist url={shorterArr[i]} /> ) 
         }
 
         console.log({finalArray})
