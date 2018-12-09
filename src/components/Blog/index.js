@@ -23,7 +23,11 @@ class Blog extends Component {
   }
 
   render() {
-    console.log(this.props, 'props')
+
+    const {loadingAllPosts, loadingCategories} = this.props
+
+    console.log('RENDER CONDITION', {loadingAllPosts}, {loadingCategories})
+
     if (this.props.error) {
       return <div>something went wrong</div>
     }
@@ -36,7 +40,7 @@ class Blog extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/:postname" component={SinglePost} />
             <Route exact path="/category/:categoryName" render={({ match }) => {
-                if(this.props.categories && this.props.categories.length > 0) {
+                if(!loadingAllPosts && !loadingCategories) {
                   const category = this.props.categories.find(category => category.slug === match.params.categoryName)
                   const { id, name } = category
                   return (
@@ -72,7 +76,8 @@ const Footer = (props) => (
 const mapStateToProps = state => ({
   posts: state.blog.posts,
   categories: state.blog.categories,
-  loading: state.blog.loading,
+  loadingAllPosts: state.blog.loadingAllPosts,
+  loadingCategories: state.blog.loadingCategories,
   error: state.blog.error
 })
 
