@@ -12,10 +12,12 @@ class SinglePost extends Component {
   }
 
   componentDidMount() {
-    const { match, dispatch } = this.props
+    const { match, dispatch, posts } = this.props
 
-    dispatch(fetchSinglePost(match.params.postname))
-    dispatch(fetchCategories())
+    if(posts.length === 0 || posts.length > 0 && !posts.find(post => post.slug === match.params.postname)) {
+      dispatch(fetchSinglePost(match.params.postname))
+      dispatch(fetchCategories())
+    }
   }
 
   render() { 
