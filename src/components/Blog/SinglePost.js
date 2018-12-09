@@ -22,15 +22,15 @@ class SinglePost extends Component {
 
   render() { 
 
-    const { posts, match, allCategoriesAreLoaded } = this.props
+    const { posts, match, allCategoriesAreLoaded, loadingCategories, loadingSinglePost } = this.props
     const p = posts.length > 0 ? posts.find(post => post.slug === match.params.postname) : false
 
     if(posts.length > 0 && p && allCategoriesAreLoaded ) {
       return <Post data={p} type='solo' />
-    } else if (!p && allCategoriesAreLoaded ) {
-      return <div>404</div>
-    } else {
+    } else if (loadingCategories || loadingSinglePost) {
       return "Loading"
+    } else {
+      return <div>404</div>
     }
   }
 }
@@ -39,9 +39,10 @@ class SinglePost extends Component {
 const mapStateToProps = state => ({
   posts: state.blog.posts,
   categories: state.blog.categories,
-  loading: state.blog.loading,
   error: state.blog.error,
-  allCategoriesAreLoaded: state.blog.allCategoriesAreLoaded
+  allCategoriesAreLoaded: state.blog.allCategoriesAreLoaded,
+  loadingSinglePost: state.blog.loadingSinglePost,
+  loadingCategories: state.blog.loadingCategories
 })
 
 export default withRouter(connect(mapStateToProps)(SinglePost))
