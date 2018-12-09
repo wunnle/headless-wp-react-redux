@@ -6,22 +6,17 @@ import { calcTimeToRead } from '../Blog/common/blogHelpers'
 
 class Post extends Component {
     render() {
-        console.log('rendering!')
         const data = this.props.data
-        const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
-        console.log(content)
-        var splittedContent = content.split(/https:\/\/gist.github.com\/wunnle\/\w*/)
-        var gists = content.match(/https:\/\/gist.github.com\/wunnle\/\w*/g)
-        console.log({splittedContent})
-        console.log({gists})
-
+        const rendered = data.content.rendered
+        const gistRegex = /https:\/\/gist.github.com\/wunnle\/\w*/g        
+        const content = rendered.match(gistRegex) 
+        ? this.combineArrays(rendered.split(gistRegex), rendered.match(gistRegex)) 
+        : <div dangerouslySetInnerHTML={{ __html: rendered }}></div>
 
         const type = (this.props.type === 'excerpt') ? 'excerpt' : 'single'
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
-        // const featuredImg = data.better_featured_image ? data.better_featured_image.source_url : ''
-        this.combineArrays(splittedContent, gists)
 
         return (
             <div className="article" data-type={type}>
@@ -41,7 +36,7 @@ class Post extends Component {
                     {(type !== 'excerpt') &&
                         //<div className="article__content" dangerouslySetInnerHTML={{ __html: content }}></div>
                         <div className="article__content">
-                            {this.combineArrays(splittedContent, gists)}
+                        {content}
                         </div>
                     }
                 </div>
@@ -55,7 +50,6 @@ class Post extends Component {
     }
 
     combineArrays = (array1, array2) => {
-        console.log("arrays", array1, array2)
         let finalArray = []
 
         let longerArr
@@ -74,7 +68,6 @@ class Post extends Component {
             shorterArr[i] && finalArray.push(<Gist url={shorterArr[i]} /> ) 
         }
 
-        console.log({finalArray})
         return finalArray
     }
 
