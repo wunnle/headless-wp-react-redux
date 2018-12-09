@@ -26,10 +26,8 @@ class Post extends Component {
                             <Link to={'/' + data.slug}>{data.title.rendered}</Link>
                         </h2>
                         <div className="article__bottom-details">
-                            {
-                                (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
-                            }
                             <span className="details__datetime">{dateTime}</span>
+                            {category !== '' && <Link to={'/category/' + category.slug}>{category.name}</Link>}
                             <span>{timeToRead} min read</span>
                         </div>
                     </hgroup>

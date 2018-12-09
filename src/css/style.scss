@@ -136,7 +136,7 @@ header {
   box-sizing: border-box;
 
   &__bottom-details {
-    text-align: center;
+    text-align: left;
     span {
       font-size: 13px;
       letter-spacing: 0.04em;
@@ -149,7 +149,7 @@ header {
       font-weight: 500;
       line-height: normal;
       font-size: 13px;
-      color: #0079FF;
+      color: rgba(150, 150, 150, 0.8);
       text-transform: uppercase;
       margin-bottom: -8px;
       margin-right: 14px;
@@ -166,14 +166,14 @@ header {
   }
   h2,
   h2 a {
-    font-size: 58px;
-    line-height: 60px;
+    font-size: 53px;
+    line-height: 55px;
     color: #2E323B;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
   }
   h2 {
-    margin: 10px 0;
-    text-align: center;
+    margin: 7px 0;
+    text-align: left;
   }
 }
 
