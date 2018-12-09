@@ -86,7 +86,7 @@ header {
   text-align: center;
   display: flex;
   align-items: center;
-  height: 80px;
+  height: 100px;
   padding: 0px 30px;
   margin-bottom: 50px;
 
@@ -155,26 +155,32 @@ header {
       margin-right: 14px;
       letter-spacing: 0.04em;
     }
-    margin-bottom: 80px;
+    margin-bottom: 45px;
   }
   &__content {
     font-style: normal;
     font-weight: normal;
-    line-height: 33px;
-    font-size: 21px;
+    line-height: 32px;     font-size: 20px;
     color: #3B4C56;
   }
-  h2,
-  h2 a {
+  h1,
+  h1 a {
     font-size: 53px;
     line-height: 55px;
     color: #2E323B;
     letter-spacing: -0.03em;
   }
-  h2 {
+  h1 {
     margin: 7px 0;
     text-align: left;
   }
+  h2 {
+    font-size: 30px;
+    color: #2E323B;
+    margin-top: 80px;
+  }
 }
 
-@import './dark-gist-theme.scss'
+@import './dark-gist-theme.scss';
+@import './me-card'
+

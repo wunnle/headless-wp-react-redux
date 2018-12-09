@@ -3,6 +3,7 @@ import Gist from 'super-react-gist';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { calcTimeToRead } from '../Blog/common/blogHelpers'
+import MeCard from './MeCard'
 
 class Post extends Component {
     render() {
@@ -21,12 +22,13 @@ class Post extends Component {
         return (
             <div className="article" data-type={type}>
                 <div className="article__inner">
+                    <MeCard date={dateTime} />
                     <hgroup>
-                        <h2>
+                        <h1>
                             <Link to={'/' + data.slug}>{data.title.rendered}</Link>
-                        </h2>
+                        </h1>
                         <div className="article__bottom-details">
-                            <span className="details__datetime">{dateTime}</span>
+                            {/* <span className="details__datetime"></span> */}
                             {category !== '' && <Link to={'/category/' + category.slug}>{category.name}</Link>}
                             <span>{timeToRead} min read</span>
                         </div>
