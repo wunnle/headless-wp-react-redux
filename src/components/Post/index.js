@@ -51,7 +51,6 @@ class Post extends Component {
 
     combineArrays = (array1, array2) => {
         let finalArray = []
-
         let longerArr
         let shorterArr 
 
@@ -64,8 +63,8 @@ class Post extends Component {
         }
 
         for (var i = 0; i < longerArr.length; i++) {
-            finalArray.push(<div dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
-            shorterArr[i] && finalArray.push(<Gist url={shorterArr[i]} /> ) 
+            finalArray.push(<div key={`${i}${i+1}`} dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
+            shorterArr[i] && finalArray.push(<Gist key={`${i}${i+2}`} url={shorterArr[i]} /> ) 
         }
 
         return finalArray
