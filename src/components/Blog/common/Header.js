@@ -7,7 +7,6 @@ export const Header = (props) => (
   {<Link to="/" className="logo-link"><img src={logo} width="70px" alt="" /> </Link>}
   <nav>
     <ul>
-      <li>Contact</li>
     </ul>
   </nav>
 </header>

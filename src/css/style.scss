@@ -7,6 +7,23 @@ a {
   text-decoration: none;
 }
 
+body {
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;;
+}
+
+.blog {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .postCard.loadingCard {
   background: #EAE3E3;
   animation: 1s infinite loadingCardColorChange;
@@ -82,6 +99,51 @@ $cubicN: cubic-bezier(0.855, -0.505, 0.225, 1.275);
   margin: auto;
 }
 
+footer {
+
+  margin-top: auto;
+
+  .container {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    box-sizing: border-box;
+    width: 1200px;
+    max-width: 100%;
+    border-top: 1px solid #dedede;
+  }
+
+  .logo-link img {
+    width: 60px;
+  }
+
+  nav {
+    margin-left: auto;
+    margin-top: 6px;
+
+    li {
+      list-style: none;
+      
+      a {
+        margin-left: 14px;
+
+        img {
+          opacity: 0.4;
+          transition: opacity ease-in 0.2s;
+        }
+      }
+
+      a:hover, a:active {
+        img {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
 header {
   text-align: center;
   display: flex;
@@ -131,7 +193,7 @@ header {
 .article {
   width: 740px;
   max-width: 100%;
-  margin: -30px auto 100px;
+  margin: 100px auto 200px;
   padding: 0 16px;
   box-sizing: border-box;
 

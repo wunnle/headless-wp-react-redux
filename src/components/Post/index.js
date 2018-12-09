@@ -101,7 +101,6 @@ Post.defaultProps = {
 const mapStateToProps = state => ({
     posts: state.blog.posts,
     categories: state.blog.categories,
-    loading: state.blog.loading,
     error: state.blog.error
 })
 

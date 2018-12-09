@@ -4,6 +4,7 @@ import PostCard from '../PostCard'
 import '../../css/style.scss'
 import { connect } from 'react-redux'
 import { Header } from './common/Header';
+import { Footer } from './common/Footer';
 import { LoadingCards } from './common/LoadingCards';
 import Home from './Home'
 import SinglePost from './SinglePost'
@@ -64,14 +65,6 @@ class Blog extends Component {
     );
   }
 }
-
-const Footer = (props) => (
-  <footer>
-    <div className="container">
-      <i className="papership-bw" />
-    </div>
-  </footer>
-)
 
 const mapStateToProps = state => ({
   posts: state.blog.posts,
