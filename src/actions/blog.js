@@ -32,25 +32,40 @@ export const fetchAllPostsFail = (error) => ({
 })
 
 
-export function fetchPostsOnCategory(category) {
-  let categoryString = ''
-  category.forEach(category => {
-    categoryString += `${category},`  
-  });
+// posts on category
 
+export function fetchPostsOnCategory(categoryId, categoryName) {
   return dispatch => {
-    dispatch(fetchAllPostsBegin())
-    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?categories=${categoryString}`)
+    dispatch(fetchPostsOnCategoryBegin(categoryName))
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?categories=${categoryId}`)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(fetchAllPostsSuccess(json))
+        dispatch(fetchPostsOnCategorySuccess(categoryName, json))
         console.log(json)
         return json
       })
-      .catch(error => dispatch(fetchAllPostsFail(error)))
+      .catch(error => dispatch(fetchPostsOnCategoryFail(categoryName, error)))
   }
 }
+
+export const fetchPostsOnCategoryBegin = (categoryName) => ({
+  type: 'FETCH_POSTS_ON_CATEGORY_BEGIN',
+  payload: { categoryName }
+})
+
+export const fetchPostsOnCategorySuccess = (categoryName, posts) => ({
+  type: 'FETCH_POSTS_ON_CATEGORY_SUCCESS',
+  payload: { categoryName, posts }
+})
+
+export const fetchPostsOnCategoryFail = (category, error) => ({
+  type: 'FETCH_POSTS_ON_CATEGORY_FAIL',
+  payload: { category, error }
+})
+
+
+// single post
 
 export function fetchSinglePost(slug) {
   console.log(`fetching single post for ${slug}`)

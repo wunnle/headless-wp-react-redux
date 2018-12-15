@@ -197,6 +197,11 @@ header {
   padding: 0 16px;
   box-sizing: border-box;
 
+  *::selection {
+     background: #F69226;
+     color: white;
+  }
+
   &__bottom-details {
     text-align: left;
     span {

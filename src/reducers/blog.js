@@ -9,6 +9,8 @@ const initialState = {
   loadingCategories: false,
   allCategoriesAreLoaded: false,
   allPostsAreLoaded: false,
+  loadingPostsOnCategoryOf: null,
+  categoriesFullyLoaded: [],
   error: null
 }
 
@@ -68,6 +70,20 @@ export default function blog(state = initialState, action) {
       categories: action.payload.categories,
       loadingCategories: false,
       allCategoriesAreLoaded: true
+    }
+
+    case 'FETCH_POSTS_ON_CATEGORY_BEGIN':
+    return {
+      ...state,
+      loadingPostsOnCategoryOf: action.payload.category
+    }
+
+    case 'FETCH_POSTS_ON_CATEGORY_SUCCESS':
+    return {
+      ...state,
+      posts: action.payload.posts,
+      loadingPostsOnCategoryOf: null,
+      categoriesFullyLoaded: [...state.categoriesFullyLoaded, action.payload.categoryName]
     }
 
     case 'NAVIGATE_TO_POST':

@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
-import PostCard from '../PostCard'
 import '../../css/style.scss'
 import { connect } from 'react-redux'
 import { Header } from './common/Header';
 import { Footer } from './common/Footer';
-import { LoadingCards } from './common/LoadingCards';
 import Home from './Home'
 import SinglePost from './SinglePost'
+import CategoriesPage from './Categories'
 
 
 class Blog extends Component {
@@ -40,24 +39,7 @@ class Blog extends Component {
           <div className="container">
             <Route exact path="/" component={Home} />
             <Route exact path="/:postname" component={SinglePost} />
-            <Route exact path="/category/:categoryName" render={({ match }) => {
-                if(!loadingAllPosts && !loadingCategories) {
-                  const category = this.props.categories.find(category => category.slug === match.params.categoryName)
-                  const { id, name } = category
-                  return (
-                    <>
-                    <h2>Posts in {name}</h2>
-                    <div className="articles">
-                    {this.props.posts.filter(post => post.categories[0] === id)
-                      .map(post => <PostCard data={post} key={post.id} type='excerpt' />)}
-                    </div>
-                    </>
-                  )
-                } else {
-                  return <LoadingCards/>
-                }
-            }
-            } />
+            <Route exact path="/category/:categoryName" component={CategoriesPage} />
           </div>
         </div>
         <Footer />
