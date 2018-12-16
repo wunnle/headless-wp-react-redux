@@ -1,21 +1,107 @@
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 // Fetching blog posts
 
-export function fetchPosts(url) {
+export function fetchAllPosts(url) {
   return dispatch => {
-    dispatch(fetchPostsBegin())
-    return fetch("http://wunnle.com/headless/wp-json/wp/v2/article?_embed")
+    dispatch(fetchAllPostsBegin())
+    return fetch("https://wunnle.com/headless/wp-json/wp/v2/article")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(fetchPostsSuccess(json))
+        dispatch(fetchAllPostsSuccess(json))
+        return json
+      })
+      .catch(error => dispatch(fetchAllPostsFail(error)))
+  }
+}
+
+export const fetchAllPostsBegin = () => ({
+  type: 'FETCH_ALL_POSTS_BEGIN'
+})
+
+export const fetchAllPostsSuccess = (posts) => ({
+  type: 'FETCH_ALL_POSTS_SUCCESS',
+  payload: { posts }
+})
+
+export const fetchAllPostsFail = (error) => ({
+  type: 'FETCH_ALL_POSTS_FAIL',
+  payload: { error }
+})
+
+
+// posts on category
+
+export function fetchPostsOnCategory(categoryId, categoryName) {
+  return dispatch => {
+    dispatch(fetchPostsOnCategoryBegin(categoryName))
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?categories=${categoryId}`)
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(fetchPostsOnCategorySuccess(categoryName, json))
         console.log(json)
         return json
       })
-      .catch(error => dispatch(fetchPostsFail(error)))
+      .catch(error => dispatch(fetchPostsOnCategoryFail(categoryName, error)))
   }
 }
+
+export const fetchPostsOnCategoryBegin = (categoryName) => ({
+  type: 'FETCH_POSTS_ON_CATEGORY_BEGIN',
+  payload: { categoryName }
+})
+
+export const fetchPostsOnCategorySuccess = (categoryName, posts) => ({
+  type: 'FETCH_POSTS_ON_CATEGORY_SUCCESS',
+  payload: { categoryName, posts }
+})
+
+export const fetchPostsOnCategoryFail = (category, error) => ({
+  type: 'FETCH_POSTS_ON_CATEGORY_FAIL',
+  payload: { category, error }
+})
+
+
+// single post
+
+export function fetchSinglePost(slug) {
+  console.log(`fetching single post for ${slug}`)
+  return dispatch => {
+    dispatch(fetchSinglePostBegin())
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?slug=${slug}`)
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        console.log('SINGLE POST', json)
+        dispatch(fetchSinglePostSuccess(json))
+        console.log(json)
+        return json
+      })
+  }
+}
+
+export const fetchSinglePostBegin = () => ({
+  type: 'FETCH_SINGLE_POST_BEGIN'
+})
+
+export const fetchSinglePostSuccess = (post) => {
+  console.log(`fetching single post success!`, post);
+
+  return {
+  type: 'FETCH_SINGLE_POST_SUCCESS',
+  payload: { post }
+}
+}
+  
+
+export const fetchSinglePostFail = (error) => ({
+  type: 'FETCH_SINGLE_POST_FAIL',
+  payload: { error }
+})
+
+
 
 const handleErrors = (res) => {
   if(!res.ok) {
@@ -24,26 +110,12 @@ const handleErrors = (res) => {
   return res
 }
 
-export const fetchPostsBegin = () => ({
-  type: 'FETCH_POSTS_BEGIN'
-})
-
-export const fetchPostsSuccess = (posts) => ({
-  type: 'FETCH_POSTS_SUCCESS',
-  payload: { posts }
-})
-
-export const fetchPostsFail = (error) => ({
-  type: 'FETCH_POSTS_FAIL',
-  payload: { error }
-})
-
 // Fetch blog categories
 
 export function fetchCategories() {
   return dispatch => {
     dispatch(fetchCategoriesBegin())
-    return fetch("http://wunnle.com/headless/wp-json/wp/v2/categories")
+    return fetch("https://wunnle.com/headless/wp-json/wp/v2/categories")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {

@@ -1,69 +1,93 @@
 import React, { Component } from 'react'
+import Gist from 'super-react-gist';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import htmlToText from "html-to-text"
+import { calcTimeToRead } from '../Blog/common/blogHelpers'
+import MeCard from './MeCard'
 
 class Post extends Component {
     render() {
         const data = this.props.data
-        const content = (this.props.type === 'excerpt') ? data.excerpt.rendered : data.content.rendered
+        const rendered = data.content.rendered
+        const gistRegex = /https:\/\/gist.github.com\/wunnle\/\w*/g        
+        const content = rendered.match(gistRegex) 
+        ? this.combineArrays(rendered.split(gistRegex), rendered.match(gistRegex)) 
+        : <div dangerouslySetInnerHTML={{ __html: rendered }}></div>
+
+        const type = (this.props.type === 'excerpt') ? 'excerpt' : 'single'
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
-        const timeToRead = this.calcTimeToRead(data.content.rendered)
+        const timeToRead = calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
 
         return (
-            <div className="article">
-                <div className="article__top-details">
-                {
-                    (category !== '') && <Link to={'/category/' + category.slug}>{category.name}</Link>
-                }
-                </div>
-                <h2>
-                <i className="emoji">{data.acf.emoji}</i>
-                {/* <a onClick={this.props.handleChangePage.bind(null, data.slug)}>{data.title.rendered}</a> */}
-                <Link to={'/' + data.slug}>{data.title.rendered}</Link>
-                </h2>
-                <div className="article__bottom-details">
-                <a className="details__datetime">{dateTime}</a>
-                <a>{timeToRead} min read</a>
-                </div>
-                <div className="article__content" dangerouslySetInnerHTML={{ __html: content}}> 
+            <div className="article" data-type={type}>
+                <div className="article__inner">
+                    <MeCard date={dateTime} />
+                    <hgroup>
+                        <h1>
+                            <Link to={'/' + data.slug}>{data.title.rendered}</Link>
+                        </h1>
+                        <div className="article__bottom-details">
+                            {/* <span className="details__datetime"></span> */}
+                            {category !== '' && <Link to={'/category/' + category.slug}>{category.name}</Link>}
+                            <span>{timeToRead} min read</span>
+                        </div>
+                    </hgroup>
+                    {(type !== 'excerpt') &&
+                        //<div className="article__content" dangerouslySetInnerHTML={{ __html: content }}></div>
+                        <div className="article__content">
+                        {content}
+                        </div>
+                    }
                 </div>
             </div>
         )
     }
 
-    calcTimeToRead = content => {
-        let words, imgs = 0;
-    
-        const wps = 0.218340611, ips = 12;
-    
-        let el = document.createElement("html");
-        el.innerHTML = content;
-        imgs = el.querySelectorAll("img").length;
-    
-        words = htmlToText.fromString(content).length;
-        return Math.floor(Math.floor((words * wps + imgs * ips) / 60));
+    getGistIdFromUrl = url => {
+        console.log(url.match(/https:\/\/gist.github.com\/wunnle\/(.*)/))
+        return url.match(/https:\/\/gist.github.com\/wunnle\/(\w*)/)[1]
+    }
+
+    combineArrays = (array1, array2) => {
+        let finalArray = []
+        let longerArr
+        let shorterArr 
+
+        if(array1.length > array2.length) {
+            longerArr = array1
+            shorterArr = array2
+        } else {
+            longerArr = array2
+            shorterArr = array1
+        }
+
+        for (var i = 0; i < longerArr.length; i++) {
+            finalArray.push(<div key={`${i}${i+1}`} dangerouslySetInnerHTML={{ __html: longerArr[i] }}></div>)
+            shorterArr[i] && finalArray.push(<Gist key={`${i}${i+2}`} url={shorterArr[i]} /> ) 
+        }
+
+        return finalArray
     }
 
     calcDateTime = t => {
         const date = new Date(t)
-    
+
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         const now = new Date()
-        if (now.getFullYear() ==! date.getFullYear()) {
-          return months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
+        if (now.getFullYear() !== date.getFullYear()) {
+            return months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
         }
 
-        if(now.toDateString() === date.toDateString()) {
-            if(date.getHours() > now.getHours()) {
-                return date.getHours() - now.getHours() + ' hours ago' 
+        if (now.toDateString() === date.toDateString()) {
+            if (date.getHours() > now.getHours()) {
+                return date.getHours() - now.getHours() + ' hours ago'
             } else {
                 return 'just now'
             }
         }
 
-        if(now.getFullYear() === date.getFullYear()) {
+        if (now.getFullYear() === date.getFullYear()) {
             return months[date.getMonth()] + ' ' + date.getDate()
         }
     }
@@ -77,8 +101,7 @@ Post.defaultProps = {
 const mapStateToProps = state => ({
     posts: state.blog.posts,
     categories: state.blog.categories,
-    loading: state.blog.loading,
     error: state.blog.error
-  })
-  
+})
+
 export default connect(mapStateToProps)(Post)
