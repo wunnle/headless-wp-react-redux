@@ -75,9 +75,10 @@ body {
 
   @media screen and (max-width: 500px) {
     width: calc(100vw - 40px);
-    max-width: 320px;
+    max-width: 300px;
     margin: 15px 20px;
-    height: 400px;
+    height: 360px;
+    background-size: cover !important;
   }
   &:hover {
     transform: scale(1.08);
@@ -104,6 +105,12 @@ body {
     font-size: 40px;
     line-height: 38px;
     margin: 6px 0 10px;
+
+    @media screen and (max-width: 500px) {
+      font-size: 30px;
+      line-height: 28px;
+      margin: 6px 0 3px;
+    }
   }
 }
 
@@ -203,15 +210,19 @@ header {
   max-width: 100%;
   line-height: 1.14em;
   @media screen and (max-width: 800px) {
-    font-size: 34px;
-    padding: 10px 40px 0;
-    margin: -20px 0 50px;
+    font-size: 30px;
+    padding: 10px 60px 0;
+    margin: -20px auto 50px;
     box-sizing: border-box;
+    max-width: 600px;
   }
   @media screen and (max-width: 500px) {
     font-size: 22px;
-    padding: 10px 5px 0;
+    padding: 10px 30px 0;
     box-sizing: border-box;
+    margin: -30px 0 20px;
+    font-weight: 600;
+    width: 100%;
   }
 }
 
