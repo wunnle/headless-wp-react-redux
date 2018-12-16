@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Post from '../Post'
+import LoadingPost from '../Post/loading'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchCategories, fetchSinglePost } from "../../actions/blog"
@@ -27,8 +28,10 @@ class SinglePost extends Component {
 
     if(posts.length > 0 && p && allCategoriesAreLoaded ) {
       return <Post data={p} type='solo' />
+      //return <LoadingPost />
     } else if (loadingCategories || loadingSinglePost) {
-      return "Loading"
+      //return "Loading"
+      return <LoadingPost />
     } else {
       return <div>404</div>
     }

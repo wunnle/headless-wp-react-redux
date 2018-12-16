@@ -4,6 +4,7 @@ import PostCard from '../PostCard'
 import { LoadingCards } from './common/LoadingCards';
 import { connect } from 'react-redux'
 import { fetchCategories, fetchPostsOnCategory } from '../../actions/blog'
+import PlaceholderText from '../PlaceholderText'
 
 
 
@@ -53,7 +54,7 @@ class Categories extends Component {
 
       return (
         <div className='categories'>
-          <h2 className='categories__title'>Posts in {categoryName}</h2>
+          <h2 className='categories__title'>{ categoryName ? `Posts in ${categoryName}` : <PlaceholderText count='8' /> }</h2>
 
           
           <div className="articles">
