@@ -15,7 +15,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin: 0;;
+  margin: 0;
+  ;
 }
 
 .blog {
@@ -24,7 +25,8 @@ body {
   flex-direction: column;
 }
 
-.postCard.loadingCard, .postCard.loadingCard:hover {
+.postCard.loadingCard,
+.postCard.loadingCard:hover {
   background: #F4F4F4;
   animation: 1s infinite loadingCardColorChange;
   box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.015);
@@ -59,6 +61,24 @@ body {
   text-decoration: none;
   margin: 40px;
   transition: transform cubic-bezier(0.35, 1.21, 1, 1) 0.16s;
+
+  @media screen and (max-width: 1220px) {
+    width: 320px;
+    margin: 20px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 320px;
+    margin: 15px 15px;
+    height: 400px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: calc(100vw - 40px);
+    max-width: 320px;
+    margin: 15px 20px;
+    height: 400px;
+  }
   &:hover {
     transform: scale(1.08);
     box-shadow: 0px 10px 17px rgba(0, 0, 0, 0.20);
@@ -91,7 +111,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-$black: #282C35;
+$black: #242121;
 $cubicN: cubic-bezier(0.855, -0.505, 0.225, 1.275);
 .container {
   width: 1260px;
@@ -100,9 +120,7 @@ $cubicN: cubic-bezier(0.855, -0.505, 0.225, 1.275);
 }
 
 footer {
-
   margin-top: auto;
-
   .container {
     text-align: center;
     display: flex;
@@ -113,29 +131,25 @@ footer {
     width: 1200px;
     max-width: 100%;
     border-top: 1px solid #dedede;
+    padding: 0 20px;
   }
-
   .logo-link img {
     width: 60px;
   }
-
   nav {
     margin-left: auto;
     margin-top: 6px;
-
     li {
       list-style: none;
-      
       a {
         margin-left: 14px;
-
         img {
           opacity: 0.4;
           transition: opacity ease-in 0.2s;
         }
       }
-
-      a:hover, a:active {
+      a:hover,
+      a:active {
         img {
           opacity: 0.8;
         }
@@ -152,20 +166,31 @@ header {
   padding: 0px 30px;
   margin-bottom: 50px;
 
+  @media screen and (max-width: 800px) {
+    margin-bottom: 0;
+    padding: 0 25px;
+  }
+
+  @media screen and (max-width: 500px) {
+    margin: 0 auto 0;
+    padding-bottom: 0;
+  }
+
   .logo-link {
     img {
       width: 136px;
     }
+    @media screen and (max-width: 500px) {
+      margin: 10px auto 40px;
+    }
   }
-
   nav {
     margin-left: auto;
-
+    display: none;
     li {
       list-style: none;
     }
   }
-
 }
 
 .blog-description {
@@ -177,6 +202,17 @@ header {
   margin: -64px auto 0;
   max-width: 100%;
   line-height: 1.14em;
+  @media screen and (max-width: 800px) {
+    font-size: 34px;
+    padding: 10px 40px 0;
+    margin: -20px 0 50px;
+    box-sizing: border-box;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 22px;
+    padding: 10px 5px 0;
+    box-sizing: border-box;
+  }
 }
 
 .articles {
@@ -187,6 +223,17 @@ header {
   a {
     text-decoration: none;
   }
+
+  @media screen and (max-width: 1220px) {
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 800px) {
+    margin: 20px 0;
+  }
+  @media screen and (max-width: 500px) {
+    margin: 30px 0;
+  }
 }
 
 // post
@@ -196,12 +243,10 @@ header {
   margin: 100px auto 200px;
   padding: 0 16px;
   box-sizing: border-box;
-
   *::selection {
-     background: #F69226;
-     color: white;
+    background: #F69226;
+    color: white;
   }
-
   &__bottom-details {
     text-align: left;
     span {
@@ -227,7 +272,7 @@ header {
   &__content {
     font-style: normal;
     font-weight: normal;
-    line-height: 32px;     
+    line-height: 32px;
     font-size: 20px;
     color: #3B4C56;
   }
@@ -235,8 +280,12 @@ header {
   h1 a {
     font-size: 53px;
     line-height: 55px;
-    color: #2E323B;
+    color: #242121;
     letter-spacing: -0.03em;
+    @media screen and (max-width: 500px) {
+      font-size: 30px;
+      line-height: 1.02;
+    }
   }
   h1 {
     margin: 7px 0;
@@ -244,24 +293,36 @@ header {
   }
   h2 {
     font-size: 30px;
-    color: #2E323B;
+    color: #242121;
     margin-top: 80px;
+    @media screen and (max-width: 500px) {
+      font-size: 24px;
+    }
   }
 }
 
 @import './dark-gist-theme.scss';
 @import './me-card';
-
 .categories {
   &__title {
     font-size: 36px;
     padding: 0 40px;
     margin-bottom: -70px;
-    color: #282C35;
+    color: #242121;
+    @media screen and (max-width: 800px) {
+      margin-bottom: 0;
+      font-size: 30px;
+      padding: 0 25px;
+    }
+    @media screen and (max-width: 500px) {
+      margin-bottom: 0;
+      font-size: 30px;
+    }
   }
 }
 
-.placeholder-text, span.placeholder-text {  
+.placeholder-text,
+span.placeholder-text {
   background: #eaeaea;
   color: #eaeaea;
   border-radius: 2px;
@@ -275,8 +336,6 @@ header {
   max-width: 100%;
   overflow: hidden;
   animation: 2s placeholter-fadein;
-
-
   &.dark {
     color: #dbdbdb;
     background: #dbdbdb;
