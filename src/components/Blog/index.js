@@ -39,7 +39,7 @@ class Blog extends Component {
           <div className="container">
             <Route exact path="/" component={Home} />
             <Route exact path="/:postname" component={SinglePost} />
-            <Route exact path="/category/:categoryName" component={CategoriesPage} />
+            <Route exact path="/category/:categorySlug" component={CategoriesPage} />
           </div>
         </div>
         <Footer />

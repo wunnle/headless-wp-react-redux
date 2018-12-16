@@ -15,39 +15,44 @@ class Categories extends Component {
 
 
   componentDidMount() {
-    const { dispatch, match } = this.props
+    const { dispatch, match, allCategoriesAreLoaded, categories, allPostsAreLoaded } = this.props
 
-    dispatch(fetchCategories())
-    const categoryName = match.params.categoryName
-    this.setState({ categoryName })
+    if(!allCategoriesAreLoaded) {
+      dispatch(fetchCategories())
+    }
+
+    const categorySlug = match.params.categorySlug
+    this.setState({ categorySlug })
+
+    if(allPostsAreLoaded) {
+      const category = categories.filter(cat => cat.slug === categorySlug)[0]
+      const categoryId = category.id
+      const categoryName = category.name
+
+      this.setState({categoryId, categoryName})
+    }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { allCategoriesAreLoaded, categoriesFullyLoaded, categories, dispatch } = this.props
-    const { categoryName, categoryId } = this.state
-
+    const { categorySlug, categoryId } = this.state
 
     if (allCategoriesAreLoaded && categoriesFullyLoaded.length === 0 && !categoryId) {
-      let categoryId
+      const category = categories.filter(cat => cat.slug === categorySlug)[0]
+      const categoryId = category.id
+      const categoryName = category.name
 
-      categories.forEach(cat => {
-
-        if (cat.slug === categoryName) {
-          categoryId = cat.id
-        }
-      })
-
-      this.setState({ categoryId })
-      dispatch(fetchPostsOnCategory(categoryId, categoryName))
+      this.setState({ categoryId, categoryName })
+      dispatch(fetchPostsOnCategory(categoryId, categorySlug))
     }
   }
 
   render() {
-    const { categoriesFullyLoaded, posts } = this.props
-    const { categoryName, categoryId } = this.state
+    const { categoriesFullyLoaded, posts, allPostsAreLoaded } = this.props
+    const { categorySlug, categoryId, categoryName } = this.state
 
 
-    if (categoriesFullyLoaded.includes(categoryName)) {
+    if (categoriesFullyLoaded.includes(categorySlug) || allPostsAreLoaded) {
 
       posts.forEach(post => console.log(post.categories[0] === categoryId))
 
@@ -72,6 +77,7 @@ const mapStateToProps = state => ({
   loadingCategories: state.blog.loadingCategories,
   allCategoriesAreLoaded: state.blog.allCategoriesAreLoaded,
   categoriesFullyLoaded: state.blog.categoriesFullyLoaded,
+  allPostsAreLoaded: state.blog.allPostsAreLoaded,
   error: state.blog.error
 })
 
