@@ -32,9 +32,11 @@ class Home extends Component {
         <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
         <div className="articles">
           {
-            (allPostsAreLoaded && allCategoriesAreLoaded) ? this.props.posts.map(post =>
-                <PostCard key={post.id} data={post} getCategoryNameFromId={this.getCategoryNameFromId} />)
-                : <LoadingCards />
+            (allPostsAreLoaded && allCategoriesAreLoaded)
+            ? this.props.posts.map(post =>
+            <PostCard key={post.id} data={post} getCategoryNameFromId={this.getCategoryNameFromId} />)
+            :
+             <LoadingCards />
           }
         </div>
       </>

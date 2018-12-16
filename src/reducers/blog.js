@@ -45,6 +45,9 @@ export default function blog(state = initialState, action) {
     }
 
     case 'FETCH_SINGLE_POST_SUCCESS':
+
+    console.log('payload', action.payload)
+
     return {
       ...state,
       loadingSinglePost: false,

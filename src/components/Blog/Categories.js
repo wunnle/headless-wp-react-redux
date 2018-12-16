@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import PostCard from '../PostCard'
 import { LoadingCards } from './common/LoadingCards';
 import { connect } from 'react-redux'
 import { fetchCategories, fetchPostsOnCategory } from '../../actions/blog'
-import PlaceholderText from '../PlaceholderText'
+import PlaceholderText from '../Blog/common/PlaceholderText'
 
 
 
@@ -22,7 +22,7 @@ class Categories extends Component {
       dispatch(fetchCategories())
     }
 
-    const categorySlug = match.params.categorySlug
+    const categorySlug = match.params.categoryName
     this.setState({ categorySlug })
 
     if(allPostsAreLoaded) {

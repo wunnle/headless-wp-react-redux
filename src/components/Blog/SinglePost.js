@@ -15,8 +15,8 @@ class SinglePost extends Component {
   componentDidMount() {
     const { match, dispatch, posts } = this.props
 
-    if((posts.length === 0 || posts.length > 0) && !posts.find(post => post.slug === match.params.postname)) {
-      dispatch(fetchSinglePost(match.params.postname))
+    if((posts.length === 0 || posts.length > 0) && !posts.find(post => post.slug === match.params.postName)) {
+      dispatch(fetchSinglePost(match.params.postName))
       dispatch(fetchCategories())
     }
   }
@@ -24,7 +24,7 @@ class SinglePost extends Component {
   render() { 
 
     const { posts, match, allCategoriesAreLoaded, loadingCategories, loadingSinglePost } = this.props
-    const p = posts.length > 0 ? posts.find(post => post.slug === match.params.postname) : false
+    const p = posts.length > 0 ? posts.find(post => post.slug === match.params.postName) : false
 
     if(posts.length > 0 && p && allCategoriesAreLoaded ) {
       return <Post data={p} type='solo' />

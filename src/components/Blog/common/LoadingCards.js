@@ -8,7 +8,4 @@ export const LoadingCards = props => (<>
   <LoadingCard animationDelay='0.6s' />
   <LoadingCard animationDelay='0.8s' />
   <LoadingCard animationDelay='1s' />
-  <LoadingCard animationDelay='2s' />
-  <LoadingCard />
-  <LoadingCard />
 </>);

@@ -25,7 +25,6 @@ class PostCard extends Component {
   }
 
   render() {
-    console.log('rendering!')
     const {categories, date, slug, content: {rendered: content}, title: {rendered: title}} = this.props.data;
     const category = this.props.categories.find(cat => cat.id === categories[0]);
     const postDate = new Date(date).toLocaleDateString('en-US', {

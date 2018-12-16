@@ -13,13 +13,13 @@ export const Footer = (props) => (
   <nav>
     <ul>
       <li>
-        <a target='_blank' href="https://twitter.com/wunnle">
+        <a target='_blank' rel='noopener noreferrer' href="https://twitter.com/wunnle">
           <img src={twitterLogo} alt="wunnle on twitter"/>
         </a>
-        <a target='_blank' href="https://dribbble.com/wunnle">
+        <a target='_blank' rel='noopener noreferrer' href="https://dribbble.com/wunnle">
           <img src={dribbbleLogo} alt="wunnle on dribbble"/>
         </a>
-        <a target='_blank' href="https://github.com/wunnle">
+        <a target='_blank' rel='noopener noreferrer' href="https://github.com/wunnle">
           <img src={githubLogo} alt="wunnle on github"/>
         </a>
       </li>

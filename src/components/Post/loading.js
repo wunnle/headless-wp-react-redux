@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import PlaceholderText from '../PlaceholderText'
+import PlaceholderText from '../Blog/common/PlaceholderText'
+
 import MeCard from './MeCard'
 
 class Post extends Component {

@@ -10,7 +10,6 @@ export function fetchAllPosts(url) {
       .then(res => res.json())
       .then(json => {
         dispatch(fetchAllPostsSuccess(json))
-        console.log(json)
         return json
       })
       .catch(error => dispatch(fetchAllPostsFail(error)))

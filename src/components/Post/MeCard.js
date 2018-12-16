@@ -1,5 +1,6 @@
 import React from 'react';
-import PlaceholderText from '../PlaceholderText'
+import PlaceholderText from '../Blog/common/PlaceholderText'
+
 
 const MeCard = ({date}) => {
   if(date) {

@@ -6,7 +6,7 @@ const PlaceholderText = ({length, count = 0, dark}) => {
   if(count > 0) {
       text = []
       for (let i = 0; i < count; i++) {
-          text[i] = <span className={`placeholder-text ${dark ? 'dark' : ''}`}>{generateRandWord(length)}</span>
+          text[i] = <span key={i} className={`placeholder-text ${dark ? 'dark' : ''}`}>{generateRandWord(length)}</span>
       }
   } else {
       text = <span className={`placeholder-text ${dark ? 'dark' : ''}`}>{generateRandWord(length)}</span>
