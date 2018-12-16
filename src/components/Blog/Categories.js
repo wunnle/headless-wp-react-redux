@@ -51,22 +51,17 @@ class Categories extends Component {
     const { categoriesFullyLoaded, posts, allPostsAreLoaded } = this.props
     const { categorySlug, categoryId, categoryName } = this.state
 
-
-    if (categoriesFullyLoaded.includes(categorySlug) || allPostsAreLoaded) {
-
-      posts.forEach(post => console.log(post.categories[0] === categoryId))
-
       return (
-        <>
-          <h2>Posts in {categoryName}</h2>
+        <div className='categories'>
+          <h2 className='categories__title'>Posts in {categoryName}</h2>
+
+          
           <div className="articles">
-            {posts.filter(post => (post.categories[0] === categoryId)).map(post => <PostCard data={post} key={post.id} type='excerpt' />)}
+          {(categoriesFullyLoaded.includes(categorySlug) || allPostsAreLoaded) ? posts.filter(post => (post.categories[0] === categoryId)).map(post => <PostCard data={post} key={post.id} type='excerpt' />) : <LoadingCards/>  }
           </div>
-        </>
+          
+        </div>
       )
-    } else {
-      return <LoadingCards/>
-    }
   }
 }
 

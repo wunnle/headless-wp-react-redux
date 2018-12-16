@@ -24,11 +24,12 @@ body {
   flex-direction: column;
 }
 
-.postCard.loadingCard {
+.postCard.loadingCard, .postCard.loadingCard:hover {
   background: #EAE3E3;
   animation: 1s infinite loadingCardColorChange;
   box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.05);
   opacity: 0.8;
+  transform: none;
 }
 
 @keyframes loadingCardColorChange {
@@ -227,7 +228,8 @@ header {
   &__content {
     font-style: normal;
     font-weight: normal;
-    line-height: 32px;     font-size: 20px;
+    line-height: 32px;     
+    font-size: 20px;
     color: #3B4C56;
   }
   h1,
@@ -249,5 +251,13 @@ header {
 }
 
 @import './dark-gist-theme.scss';
-@import './me-card'
+@import './me-card';
 
+.categories {
+  &__title {
+    font-size: 36px;
+    padding: 0 40px;
+    margin-bottom: -70px;
+    color: #282C35;
+  }
+}
