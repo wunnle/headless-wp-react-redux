@@ -5,7 +5,7 @@ import { push } from 'connected-react-router'
 export function fetchAllPosts(url) {
   return dispatch => {
     dispatch(fetchAllPostsBegin())
-    return fetch("https://wunnle.com/headless/wp-json/wp/v2/posts")
+    return fetch("https://wunnle.com/headless/wp-content/plugins/decoupled-json-content/data-list/rest-routes/data-list.php?post-type=post&filter=default")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {

@@ -19,14 +19,16 @@ class PostCard extends Component {
   }
 
   componentDidMount() {
-    const { better_featured_image: bgImg } = this.props.data
-    const bgUrl = bgImg && bgImg.source_url;
+    const bgUrl = this.props.data.featured_image.medium_large
     this.backgroundImageLoader(bgUrl)
   }
 
   render() {
-    const {categories, date, slug, content: {rendered: content}, title: {rendered: title}} = this.props.data;
+    const {category: categories, post_date: date, slug, post_content: content, post_title: title} = this.props.data;
     const category = this.props.categories.find(cat => cat.id === categories[0]);
+
+    console.log({date})
+
     const postDate = new Date(date).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric'
