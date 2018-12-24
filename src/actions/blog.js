@@ -5,7 +5,7 @@ import { push } from 'connected-react-router'
 export function fetchAllPosts(url) {
   return dispatch => {
     dispatch(fetchAllPostsBegin())
-    return fetch("https://wunnle.com/headless/wp-json/wp/v2/article")
+    return fetch("https://wunnle.com/headless/wp-json/wp/v2/posts")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -36,7 +36,7 @@ export const fetchAllPostsFail = (error) => ({
 export function fetchPostsOnCategory(categoryId, categoryName) {
   return dispatch => {
     dispatch(fetchPostsOnCategoryBegin(categoryName))
-    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?categories=${categoryId}`)
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/posts?categories=${categoryId}`)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -70,7 +70,7 @@ export function fetchSinglePost(slug) {
   console.log(`fetching single post for ${slug}`)
   return dispatch => {
     dispatch(fetchSinglePostBegin())
-    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/article?slug=${slug}`)
+    return fetch(`https://wunnle.com/headless/wp-json/wp/v2/posts?slug=${slug}`)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
