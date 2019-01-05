@@ -23,7 +23,7 @@ class Post extends Component {
         const featuredImage = this.props.data.better_featured_image.source_url
 
         console.log('posts, initially', this.props.posts)
-        const description = this.strip(excerpt).substring(0, 100)
+        const description = this.strip(excerpt)
         const url = `http://blog.wunnle.com/${data.slug}`
 
         console.log({featuredImage})

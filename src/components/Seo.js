@@ -12,7 +12,7 @@ const getMetaTags = ({
   const metaTags = [
     { itemprop: 'name', content: title },
     { itemprop: 'description', content: description },
-    { name: 'description', content: description },
+    { name: 'description', content: description.substring(0, 100) },
     { name: 'twitter:site', content: '@wunnle' },
     { name: 'twitter:title', content: `${title}` },
     { name: 'twitter:description', content: description },
