@@ -25,7 +25,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "postbuild": "react-snap",
+    "deploy": "node deploy",
+    "build-deploy": "yarn build && yarn deploy"
   },
   "browserslist": [
     ">0.2%",
@@ -34,6 +36,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "ftp-deploy": "^2.3.0",
     "react-snap": "^1.23.0"
   }
 }
