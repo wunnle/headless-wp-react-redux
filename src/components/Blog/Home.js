@@ -4,6 +4,7 @@ import { fetchAllPosts, fetchCategories } from "../../actions/blog"
 import { LoadingCards } from './common/LoadingCards';
 import PostCard from '../PostCard'
 import { withRouter } from 'react-router-dom'
+import Seo from '../Seo'
 
 
 class Home extends Component {
@@ -15,11 +16,11 @@ class Home extends Component {
   componentDidMount() {
     const { allPostsAreLoaded, allCategoriesAreLoaded } = this.props
 
-    if(!allPostsAreLoaded) {
+    if (!allPostsAreLoaded) {
       this.props.dispatch(fetchAllPosts())
     }
 
-    if(!allCategoriesAreLoaded) {
+    if (!allCategoriesAreLoaded) {
       this.props.dispatch(fetchCategories())
     }
   }
@@ -29,14 +30,20 @@ class Home extends Component {
 
     return (
       <>
+        <Seo
+          title='Home'
+          description={'A blog about front-end development, design and maybe some short stories.'}
+          path='/'
+          image='https://blog.wunnle.com/logo.png'
+        />
         <p className="blog-description">A blog about front-end development, design and maybe some short stories.</p>
         <div className="articles">
           {
             (allPostsAreLoaded && allCategoriesAreLoaded)
-            ? this.props.posts.map(post =>
-            <PostCard key={post.id} data={post} getCategoryNameFromId={this.getCategoryNameFromId} />)
-            :
-             <LoadingCards />
+              ? this.props.posts.map(post =>
+                <PostCard key={post.id} data={post} getCategoryNameFromId={this.getCategoryNameFromId} />)
+              :
+              <LoadingCards />
           }
         </div>
       </>

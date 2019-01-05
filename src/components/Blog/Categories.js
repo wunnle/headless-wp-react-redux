@@ -5,8 +5,7 @@ import { LoadingCards } from './common/LoadingCards';
 import { connect } from 'react-redux'
 import { fetchCategories, fetchPostsOnCategory } from '../../actions/blog'
 import PlaceholderText from '../Blog/common/PlaceholderText'
-
-
+import Seo from '../Seo'
 
 class Categories extends Component {
   constructor(props) {
@@ -14,23 +13,22 @@ class Categories extends Component {
     this.state = {}
   }
 
-
   componentDidMount() {
     const { dispatch, match, allCategoriesAreLoaded, categories, allPostsAreLoaded } = this.props
 
-    if(!allCategoriesAreLoaded) {
+    if (!allCategoriesAreLoaded) {
       dispatch(fetchCategories())
     }
 
     const categorySlug = match.params.categoryName
     this.setState({ categorySlug })
 
-    if(allPostsAreLoaded) {
+    if (allPostsAreLoaded) {
       const category = categories.filter(cat => cat.slug === categorySlug)[0]
       const categoryId = category.id
       const categoryName = category.name
 
-      this.setState({categoryId, categoryName})
+      this.setState({ categoryId, categoryName })
     }
   }
 
@@ -52,17 +50,20 @@ class Categories extends Component {
     const { categoriesFullyLoaded, posts, allPostsAreLoaded } = this.props
     const { categorySlug, categoryId, categoryName } = this.state
 
-      return (
-        <div className='categories'>
-          <h2 className='categories__title'>{ categoryName ? `Posts in ${categoryName}` : <PlaceholderText count='8' /> }</h2>
-
-          
-          <div className="articles">
-          {(categoriesFullyLoaded.includes(categorySlug) || allPostsAreLoaded) ? posts.filter(post => (post.categories[0] === categoryId)).map(post => <PostCard data={post} key={post.id} type='excerpt' />) : <LoadingCards/>  }
-          </div>
-          
+    return (
+      <div className='categories'>
+        <Seo
+          title={`Posts in ${categorySlug}`}
+          description={'A blog about front-end development, design and maybe some short stories.'}
+          path='/'
+          image='https://blog.wunnle.com/logo.png'
+        />
+        <h2 className='categories__title'>{categoryName ? `Posts in ${categoryName}` : <PlaceholderText count='8' />}</h2>
+        <div className="articles">
+          {(categoriesFullyLoaded.includes(categorySlug) || allPostsAreLoaded) ? posts.filter(post => (post.categories[0] === categoryId)).map(post => <PostCard data={post} key={post.id} type='excerpt' />) : <LoadingCards />}
         </div>
-      )
+      </div>
+    )
   }
 }
 
