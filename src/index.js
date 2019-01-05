@@ -1,18 +1,26 @@
 import React from 'react';
-import { render } from 'react-dom'
+import { render, hydrate } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './store'
 import Blog from './components/Blog';
 import ScrollToTop from './components/scrollToTop'
 
-render(
+
+const AppWithStore = () => (
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <ScrollToTop>
                 <Blog />
             </ScrollToTop>
         </ConnectedRouter>
-    </Provider>,
-  document.getElementById('root')
+    </Provider>
 )
+
+const rootElement = document.getElementById("root");
+
+if (rootElement.hasChildNodes()) {
+    hydrate(<AppWithStore />, rootElement);
+} else {
+    render(<AppWithStore />, rootElement);
+}
