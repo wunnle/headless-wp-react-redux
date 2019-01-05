@@ -21,4 +21,14 @@ if (process.env.NODE_ENV === 'development') {
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 
-export default createStore(rootReducer(history), initialState, composedEnhancers);
+const preloadedState = window.__PRELOADED_STATE__;
+
+delete window.__PRELOADED_STATE__;
+
+const store =  createStore(rootReducer(history), preloadedState || initialState, composedEnhancers);
+
+window.snapSaveState = () => ({
+  __PRELOADED_STATE__: store.getState()
+});
+
+export default store
