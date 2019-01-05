@@ -12,17 +12,17 @@ const getMetaTags = ({
   const metaTags = [
     { itemprop: 'name', content: title },
     { itemprop: 'description', content: description },
-    { name: 'description', content: description.substring(0, 100) },
-    { name: 'twitter:site', content: '@wunnle' },
-    { name: 'twitter:title', content: `${title}` },
-    { name: 'twitter:description', content: description },
-    { name: 'twitter:creator', content: twitter || '@wunnle' },
-    { name: 'og:title', content: `${title}` },
-    { name: 'og:type', content: contentType },
-    { name: 'og:url', content: url },
-    { name: 'og:description', content: description },
-    { name: 'og:site_name', content: 'blog.wunnle.com' },
-    { name: 'og:locale', content: 'en_EN' },
+    { property: 'description', content: description.substring(0, 100) },
+    { property: 'twitter:site', content: '@wunnle' },
+    { property: 'twitter:title', content: `${title}` },
+    { property: 'twitter:description', content: description },
+    { property: 'twitter:creator', content: twitter || '@wunnle' },
+    { property: 'og:title', content: `${title}` },
+    { property: 'og:type', content: contentType },
+    { property: 'og:url', content: url },
+    { property: 'og:description', content: description },
+    { property: 'og:site_name', content: 'blog.wunnle.com' },
+    { property: 'og:locale', content: 'en_EN' },
   ];
 
   if (published) metaTags.push({ name: 'article:published_time', content: published });
@@ -31,11 +31,11 @@ const getMetaTags = ({
   if (tags) metaTags.push({ name: 'article:tag', content: tags });
   if (image) {
     metaTags.push({ itemprop: 'image', content: image });
-    metaTags.push({ name: 'twitter:image:src', content: image });
-    metaTags.push({ name: 'og:image', content: image });
-    metaTags.push({ name: 'twitter:card', content: 'summary_large_image' });
+    metaTags.push({ property: 'twitter:image:src', content: image });
+    metaTags.push({ property: 'og:image', content: image });
+    metaTags.push({ property: 'twitter:card', content: 'summary_large_image' });
   } else {
-    metaTags.push({ name: 'twitter:card', content: 'summary' });
+    metaTags.push({ property: 'twitter:card', content: 'summary' });
   }
 
   return metaTags;

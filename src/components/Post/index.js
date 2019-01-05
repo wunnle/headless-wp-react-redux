@@ -20,13 +20,10 @@ class Post extends Component {
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
-        const featuredImage = this.props.data.better_featured_image.source_url
 
         console.log('posts, initially', this.props.posts)
         const description = this.strip(excerpt)
         const url = `http://blog.wunnle.com/${data.slug}`
-
-        console.log({featuredImage})
 
         return (
             <div className="article" data-type={type}>
@@ -34,7 +31,8 @@ class Post extends Component {
                     title={data.title.rendered}
                     description={description}
                     path={data.slug}
-                    image={featuredImage}
+                    image={`https://blog.wunnle.com/post-images/${data.slug}.png`}
+                    url={url}
                  />
                 <div className="article__inner">
                     <MeCard date={dateTime} />
