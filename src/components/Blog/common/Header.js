@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../img/papership2018.svg';
 
-export const Header = (props) => (
+export const Header = () => (
 <header>
-  {<Link to="/" className="logo-link"><img src={logo} width="70px" alt="" /> </Link>}
+  {<a href="/" className="logo-link"><img src={logo} width="70px" alt="" /> </a>}
   <nav>
     <ul>
     </ul>
