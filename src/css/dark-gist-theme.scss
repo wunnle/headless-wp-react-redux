@@ -4,6 +4,7 @@ body .gist .highlight {
 }
 body .gist .js-line-number {
   opacity: 0;
+  width: 16px;
 }
 
 body .gist {
@@ -21,7 +22,7 @@ body .gist .blob-code {
 
 body .gist .blob-code-inner,
 body .gist .pl-en {
-  color: #fff;
+   color: rgba(255, 255, 255, 0.7);
 }
 body .gist .pl-mb,
 body .gist .pl-mh .pl-en {
@@ -46,7 +47,7 @@ body .gist .pl-s,
 body .gist .pl-s1,
 body .gist .pl-s1 .pl-pse .pl-s2,
 body .gist .pl-s1 .pl-v {
-   color: #3ad900;
+   color: #53bb2d;
 }
 body .gist .pl-s1 .pl-s2,
 body .gist .pl-smi,
@@ -92,11 +93,13 @@ body .gist .pl-c span,
 body .gist .pl-mq {
    color: #08f;
 }
-body .gist .pl-c1,
+
 body .gist .pl-sv,
 body .gist .pl-mb {
    color: #ff628c;
 }
+
+
 body .gist .pl-e,
 body .gist .pl-k,
 body .gist .pl-mdh,
@@ -109,7 +112,7 @@ body .gist .pl-mr,
 body .gist .pl-ms,
 body .gist .pl-st,
 body .gist .pl-mi {
-   color: #ff9d00;
+   color: #D19A5F;
 }
 
 .gist-meta {
@@ -135,3 +138,30 @@ body .gist .pl-mi {
 body .gist .js-line-number {
   padding: 0 !important;
 }
+
+
+//css styles
+
+body .type-css {
+   color: rgba(255, 255, 255, 0.7);
+
+   .pl-c1 .pl-c1 {
+      color: rgba(255, 255, 255, 0.7);
+   }
+
+   .pl-c1, .pl-bu {
+      color: #D19A5F;
+   }
+
+} 
+
+body .type-html {
+   color: rgba(255, 255, 255, 0.7);
+
+   .pl-ent {
+      color: #C26C75
+   }
+}
+
+
+// html styles
