@@ -286,6 +286,27 @@ header {
     line-height: 32px;
     font-size: 20px;
     color: #3B4C56;
+
+    a, a:visited {
+      color: #0079FF
+    }
+
+    strong {
+      font-weight: 500;
+      color: #31404a;
+    }
+
+    hr{
+      opacity: 0.4;
+      margin-top: 80px;
+      margin-bottom: 30px;
+    }
+
+    .footnote {
+      font-size: 0.9em;
+      line-height: 1.68em;
+      opacity: 0.9;
+    }
   }
   h1,
   h1 a {
