@@ -5,14 +5,18 @@ import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './store'
 import Blog from './components/Blog';
 import ScrollToTop from './components/scrollToTop'
+import Analytics from 'react-router-ga';
+
 
 
 const AppWithStore = () => (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <ScrollToTop>
-                <Blog />
-            </ScrollToTop>
+            <Analytics id="UA-136327122-1" debug>
+                <ScrollToTop>
+                    <Blog />
+                </ScrollToTop>
+            </Analytics>
         </ConnectedRouter>
     </Provider>
 )
