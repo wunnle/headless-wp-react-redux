@@ -142,7 +142,7 @@ body .gist .js-line-number {
 
 //css styles
 
-body .type-css {
+body .type-css, body .type-scss {
    color: rgba(255, 255, 255, 0.7);
 
    .pl-c1 .pl-c1 {
@@ -151,6 +151,10 @@ body .type-css {
 
    .pl-c1, .pl-bu {
       color: #D19A5F;
+   }
+
+   .pl-c {
+      color: rgba(181, 177, 177, 0.5);
    }
 
 } 
