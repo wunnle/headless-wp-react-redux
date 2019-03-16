@@ -20,8 +20,6 @@ class Post extends Component {
         const category = (data.categories.length > 0) ? this.props.categories.find(cat => cat.id === data.categories[0]) : ''
         const timeToRead = calcTimeToRead(data.content.rendered)
         const dateTime = this.calcDateTime(data.date)
-
-        console.log('posts, initially', this.props.posts)
         const description = this.strip(excerpt)
         const url = `http://blog.wunnle.com/${data.slug}`
 
@@ -58,7 +56,6 @@ class Post extends Component {
     }
 
     getGistIdFromUrl = url => {
-        console.log(url.match(/https:\/\/gist.github.com\/wunnle\/(.*)/))
         return url.match(/https:\/\/gist.github.com\/wunnle\/(\w*)/)[1]
     }
 
