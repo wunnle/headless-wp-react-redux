@@ -1,22 +1,20 @@
 import React from 'react';
 import { render, hydrate } from 'react-dom'
 import { Provider } from 'react-redux'
+import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './store'
 import Blog from './components/Blog';
 import ScrollToTop from './components/scrollToTop'
-import Analytics from 'react-router-ga';
-
+import withTracker from './withTracker'
 
 
 const AppWithStore = () => (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <Analytics id="UA-136327122-1" debug>
-                <ScrollToTop>
-                    <Blog />
-                </ScrollToTop>
-            </Analytics>
+            <ScrollToTop>
+                <Route component={withTracker(Blog)} />
+            </ScrollToTop>
         </ConnectedRouter>
     </Provider>
 )
