@@ -14,7 +14,7 @@ const LoadedMeCard = ({date}) => {
   return ( 
     <div className="me-card">
       <div className="me-card__figure">
-        <img src="https://blog.wunnle.com/profilepic.jpg" alt=""/>
+        <img src="https://wunnle.com/u/profile2.jpg" alt=""/>
       </div>
       <div className="me-card__info">
         <p className="me-card__name">Sinan Aksay</p>
